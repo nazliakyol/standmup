@@ -1,0 +1,22 @@
+.DS_Store
+backup
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# config
+.config.toml
+.tmp
+.env
+.env_prd
+
+# python
+venv
+__pycache__
+*.pyc
+
+# ide
+.vscode
+.idea

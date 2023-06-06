@@ -1,0 +1,23 @@
+{% include "header.html" %}
+{% include "menu.html" %}
+
+<div class="bg-body-tertiary">
+    <div class="grid" rel="videos">
+        {% block body_content %}
+        <h4 class="video-title">{{ video_title[0] | title |replace('[^a-zA-Z0-9]', '') }}</h4>
+        <br>
+        {% include "displaying.html" %}
+        {% include "related.html" %}
+
+        <br>
+
+        {% endblock %}
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+
+{% include "footer.html" %}

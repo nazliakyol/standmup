@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>StandMup API Documentation</title>
+    <!-- CSS -->
+    <!-- CSS -->
+    <link href="https://fonts.cdnfonts.com/css/cactus-on-the-moon" rel="stylesheet">
+    <link href="https://vinorodrigues.github.io/bootstrap-dark-5/dist/css/bootstrap-night.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div style="margin-top: 0px; padding-left: 30px;">
+    <div class="flex-shrink-0 dropdown" style="text-align: right; padding-top: 40px">
+        <h5>
+            <a href="{{url_for('home')}}" style="padding-right: 20px; display: inline-block;" class="text-decoration-none">
+                Home
+            </a>
+            <a href="#end-of-page" style="padding-right: 20px; display: inline-block;" class="text-decoration-none">
+                Submit a video
+            </a>
+        </h5>
+    </div>
+</div>
+
+
+<div style="padding-top: 0px; padding-left: 40px; margin-top: 0px;text-align:left;">
+    <h2 style="margin-bottom: 5px; color:  #5f7b99">StandMup API Documentation</h2>
+    <p>Welcome to the documentation for StandMup API. Here's how to use it:</p>
+
+    <h3>Getting all the videos:</h3>
+    <p><strong>URL:</strong> http://www.standmup.com/api/videos/all</p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Returns a list of all videos.</p>
+    <p><strong>Parameters:</strong></p>
+    <p><strong>Example:</strong></p>
+    <pre><code>GET https://standmup.com/videos/all</code></pre>
+    <br>
+
+    <h3>Getting video by id:</h3>
+    <p><strong>URL:</strong> http://www.standmup.com/api/videos/video_id</p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Returns one video.</p>
+
+    <p><strong>Example:</strong></p>
+    <pre><code>GET www.standmup.com/api/videos/id</code></pre>
+    <br>
+
+    <h3>Adding new video:</h3>
+    <p><strong>URL:</strong> http://www.standmup.com/api/videos</p>
+    <p><strong>Method:</strong> POST </p>
+    <p><strong>Description:</strong> Adds a new video.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code>POST www.standmup.com/api/videos
+
+      {
+            "comedian_id": "id",
+            "title": "title",
+            "link": "link",
+            "tag_name": "tag_name",
+            "description": "description"
+            }
+        </code></pre>
+    <br>
+
+
+    <h3>Getting a random video:</h3>
+    <p><strong>URL:</strong> http://www.standmup.com/api/random</p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Returns a random video.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code>GET https://standmup.com/api/random</code></pre>
+    <br>
+
+
+    <h3>Deleting videos:</h3>
+    <p><strong>URL:</strong> http://www.standmup.com/api/videos/video_id</p>
+    <p><strong>Method:</strong> DELETE</p>
+    <p><strong>Description:</strong> Deletes a video by id.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code>DELETE https://standmup.com/api/videos/id</code></pre>
+    <br>
+
+
+    <h3>Getting all comedians:</h3>
+    <p><strong>URL:</strong> http://www.standmup.com/api/comedians/all</p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Returns all comedians with id and name.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code>GET https://standmup.com/api/comedians/all
+        </code></pre>
+    <br>
+
+    <h3>Getting all comedians by video count:</h3>
+    <p><strong>URL:</strong> http://www.standmup.com/api/comedians</p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Returns all comedians with their video count.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code>GET https://standmup.com/api/comedians
+        </code></pre>
+    <br>
+
+
+    <h3>Getting videos by comedian id:</h3>
+    <p><strong>URL:</strong> http://www.standmup.com/api/comedians/comedian_id/videos</p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Returns all videos that belong to the comedian.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code>GET https://standmup.com/api/comedians/id/videos
+        </code></pre>
+
+     <br>
+
+    <h3>Getting videos by tag:</h3>
+    <p><strong>URL:</strong> http://www.standmup.com/api/tags/tag_id</p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Returns videos by tag.</p>
+
+    <p><strong>Example:</strong></p>
+    <pre><code>GET www.standmup.com/api/tags/id</code></pre>
+    <br>
+
+    <h3>Getting stat:</h3>
+    <p><strong>URL:</strong> http://www.standmup.com/api/stat</p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Returns video, comedian, tag and video by comedian counts.</p>
+
+    <p><strong>Example:</strong></p>
+    <pre><code>GET www.standmup.com/api/stat</code></pre>
+    <br>
+
+    <h3>Safety Policy:</h3>
+    <p><strong>Description:</strong> We sure care too much about our safety policy. By don't and/or won't having any motherfucking safety policy. </strong> </p>
+    <p><strong>Example:</strong></p>
+    <pre><code>
+        if you are a child:
+            get the fuck out of here, you might get traumatized by one or two real life facts down there!
+        elif you are an adult and you think you might get ofended from some kind of content here:
+            you should not be here in the first place, son!
+        else:
+            you better go fill yourself with joy of humor and quirks of life sunshine; our days are numbered!
+    </code></pre>
+
+    <br>
+</div>
+</div>
+
+<div style="margin-top: 30px; padding-left: 45px;">
+    <div class="docHeader targetBlink" id="submit"><span
+            class="docHeaderText" style="color:  #5f7b99"><h3>Submit a Video Link:</h3></span></div>
+
+
+    <div id="submitContainer" class="highlightedContainer">
+        <div class="submitFlexItem">
+
+            <form action="/api/submit" method="POST" style="margin-bottom: 40px;" id="end-of-page">
+                <label for="youtube_link">YouTube Link:</label><br>
+                <input type="text" id="youtube_link" name="youtube_link"><br><br>
+
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
+
+                <input type="submit" value="Submit">
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+</div>
+</div>
+</body>
+</html>

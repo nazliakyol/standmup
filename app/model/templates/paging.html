@@ -1,0 +1,47 @@
+<div class="paging" style="text-align:center">
+
+    {% if page > 1 %}
+    <a href="/?page={{page-1}}" class="btn btn-link" style=" text-decoration: none; font-weight: bold">Previous</a>
+    {% endif %}
+
+    &nbsp;
+
+    {% set num_pages_to_display = 5 %}
+    {% set start_page = page - num_pages_to_display // 2 %}
+    {% set end_page = start_page + num_pages_to_display - 1 %}
+
+    {% if start_page > 1 %}
+        <a href="{{ text }}?page=1" style="text-decoration: none">1</a>
+        {% if start_page > 2 %}
+        <span>&hellip;</span>
+        {% endif %}
+    {% endif %}
+
+    {% set end_page = end_page if end_page <= total_pages else total_pages %}
+    {% set start_page = start_page if start_page > 0 else 1 %}
+
+    {% for i in range(start_page, end_page+1) %}
+        {% if i == page %}
+        <a href="{{ text }}?page={{ page }}" style="text-decoration: none; font-weight: bold">{{ i }}</a>
+        {% else %}
+        <a href="{{ text }}?page={{ i }}" style="text-decoration: none">{{ i }}</a>
+        {% endif %}
+        &nbsp;
+    {% endfor %}
+
+    {% if end_page < total_pages %}
+        {% if end_page < total_pages - 1 %}
+        <span>&hellip;</span>
+        {% endif %}
+        <a href="{{ text }}?page={{ total_pages }}" style="text-decoration: none">{{ total_pages }}</a>
+    {% endif %}
+
+
+    &nbsp;
+
+    {% if has_more %}
+    <a href="{{ text }}?page={{page+1}}" class="btn btn-link" style=" text-decoration: none; font-weight: bold">Next</a>
+    {% endif %}
+
+
+</div>
