@@ -1,15 +1,10 @@
 TODO
-* fix cache (it's not working on prod) 
 * put related videos side by side on single video page
-* support www.standmup.com
 * keep the addVieo test for now --> is it working ----> NOT TESTED:
   !! show the module not found error (for app module) to osgur!!
 * add testing (if everything's ok --> merge master)
 * change tag id's with tag names in admin panel
 * add some stat to admin panel home page
-* convert logo to image 
-* check & fill all of the empty tags 
-* replace API & GitHub —> footer 
 * create a Mobil version —> put comedians & tags below the videos 
 * delete Jquery
 
