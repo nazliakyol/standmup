@@ -1,10 +1,23 @@
 <!-- Footer -->
 <footer class="pt-4 pb-3 mt-4">
-    <div class="container"  style="display: flex; justify-content: space-between;">
-         <p class="copyright text-muted left-content" style="margin-left: 100px;"><a class="d-block  text-decoration-none" href="https://www.urbandictionary.com/define.php?term=Mup" title="here's wtf it is!" target="_blank">what's muuuup??</a></p>
-        <p class="copyright text-muted right-content">Copyright &copy; StandMup 2023</p>
+    <div class="container" >
+        <div class="row">
+        <p class="text-muted col-8" >
+            <a class="text-decoration-none" href="https://www.urbandictionary.com/define.php?term=Mup"
+               title="here's wtf it is!" target="_blank">what's muuuup??</a>
+            |
+            <strong><a href="{{url_for('api')}}" class="text-decoration-none">
+                API
+            </a></strong> |
+            <strong><a href="https://github.com/nazlinurakyol/standmup" class="text-decoration-none"
+                       target="_blank">
+                github
+            </a></strong>
+        </p>
 
+        <p class="copyright text-muted col-4">Copyright &copy; StandMup 2023</p>
 
+</div>
     </div>
 </footer>
 
