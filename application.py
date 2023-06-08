@@ -16,6 +16,7 @@ from app.service.cache import cache
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+
 # home page
 @application.route("/", methods=["GET"])
 @cache.cached(timeout=5000)
@@ -42,6 +43,7 @@ def comedian(comedian_id):
 @cache.cached(timeout=5000)
 def video(video_id):
     return handle_video(video_id)
+
 
 # api page
 @application.route("/api")
@@ -87,6 +89,7 @@ def getVideo(video_id):
 def getCountByName():
     return handle_getCountByName()
 
+
 # get all comedians
 @application.route("/api/comedians/all", methods=["GET"])
 def allComedians():
@@ -124,6 +127,7 @@ def delete():
 @application.route("/api/stat", methods=["GET"])
 def stat():
     return handle_stat()
+
 
 start_scheduler()
 if application.config["ENV"] == 'development':

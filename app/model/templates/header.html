@@ -15,6 +15,7 @@
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
             crossorigin="anonymous"></script>
     <style>
+
     body {
         background: #111
     }
@@ -101,10 +102,20 @@
         text-align:right
     }
 
-    #logo{
-        font-family: 'Cactus On The Moon', sans-serif; margin: 5px;
-        color: #da7120;
-    }
+    @media only screen and (max-width: 600px) {
+        #logo{
+            width: 20px;
+            }
+        .video-title{
+            font-size: 0.7rem;
+            }
+        .video-description{
+            font-size: 0.5rem;
+            }
+        body {
+            font-size: 0.5rem;
+            }
+        }
 
     </style>
 </head>
@@ -117,6 +128,9 @@
   gtag('js', new Date());
 
   gtag('config', 'G-0X7EZB5VKM');
+
+
+
 </script>
 
 <body>
@@ -127,7 +141,7 @@
         <div class="dropdown">
             <a href="{{url_for('home')}}"
                class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                <img src="{{url_for('static', filename='logo.png')}}" alt="logo" style="height:45px; margin-top:10px;">
+                <img src="{{url_for('static', filename='logo.png')}}" id="logo" alt="logo" style="width:120px; margin-top:10px;">
             </a>
         </div>
 
@@ -137,9 +151,8 @@
                 <input href="/?search={{search}}" id="search" name="search" type="text" class="form-control"
                        placeholder="Search..."
                        aria-label="Search">
-                <button class="btn btn-primary" type="submit">Search</button>
+                <button class="btn btn-primary" type="submit">go</button>
             </form>
-
 
 
         </div>
