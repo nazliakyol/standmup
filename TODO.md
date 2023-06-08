@@ -7,6 +7,7 @@ TODO
 * add some stat to admin panel home page
 * create a Mobil version —> put comedians & tags below the videos 
 * delete Jquery
+* delete unnecessary branches  
 
 
 
