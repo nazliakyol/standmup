@@ -7,11 +7,17 @@ TODO
 * add some stat to admin panel home page
 * create a Mobil version —> put comedians & tags below the videos 
 * delete Jquery
-* delete unnecessary branches  
+* delete unnecessary branches 
+* refactoring --> Flask application instance --> remove it from db file 
+* refactoring --> remove template & static modules from model directory
+* keep the tag in the artist or tag when clicked
+* correct the css for search button (ex. make it wider)
+* correct the css for fail & success html pages
 
 
 
 long-term TODO:
+* post show HN
 * add dutch stand-up comedians with english subtitle --> add tag: dutch comedy
 * change github status to public
 * share the website: a website for stand-up enthusiasts.
@@ -26,10 +32,8 @@ tags that has not been used:
 45 phobia
 47 OCD
 48 PTSD
-89 blindness
 94 engagement
 140 obsession
-159 discrimination
 288 european
 289 russia
 
