@@ -45,11 +45,12 @@ def handle_comedian(comedian_id):
             .scalar()
     )
     total_pages = int(video_count / pagesSize) + 1
-
+    title = comedian.name
 
     return CachedResponse(
         response=make_response(render_template(
         "comedian.html",
+        title=title,
         all_videos=videos,
         all_names=names,
         page=page,

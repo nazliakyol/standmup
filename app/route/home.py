@@ -65,9 +65,11 @@ def handle_home():
 
     video_count = db.session.query(db.func.count(videodb.Video.id)).scalar()
     total_pages = int(video_count / pagesSize) + 1
+    title = 'f*ck other ways to happify'
 
     return CachedResponse(
         response=make_response(render_template('index.html', all_videos=videos,
+        title = title,
         all_names=names,
         page=page,
         search=search,
