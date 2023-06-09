@@ -22,9 +22,9 @@
 
     {% for i in range(start_page, end_page+1) %}
         {% if i == page %}
-        <a href="{{ text }}?page={{ page }}" style="text-decoration: none; font-weight: bold">{{ i }}</a>
+        <a href="{{ text }}&page={{ page }}" style="text-decoration: none; font-weight: bold">{{ i }}</a>
         {% else %}
-        <a href="{{ text }}?page={{ i }}" style="text-decoration: none">{{ i }}</a>
+        <a href="{{ text }}&page={{ i }}" style="text-decoration: none">{{ i }}</a>
         {% endif %}
         &nbsp;
     {% endfor %}

@@ -9,7 +9,7 @@
         <br>
         {% include "displaying.html" %}
         {% endblock %}
-        {% set text = "/tags/" + tag.id|string + "/" + tag.name|replace(' ', '-')  %}
+        {% set text = "/tags/" + tag.id|string + "/" + tag.name|replace(' ', '-') +"?" %}
         {% include "paging.html" %}
 
     </div>

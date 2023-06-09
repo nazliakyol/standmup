@@ -8,6 +8,7 @@ from app.route.api import handle_api, handle_success, handle_addVideo, handle_fa
     handle_delete_video, handle_stat
 from app.route.comedian import handle_comedian
 from app.route.home import handle_home
+from app.route.search import handle_search, handle_search_fail
 from app.route.tag import handle_tag
 from app.route.video import handle_video
 from app.service.admin import start_admin
@@ -22,6 +23,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 @cache.cached(timeout=5000)
 def home():
     return handle_home()
+
+
+# search page
+@application.route("/search", methods=["GET"])
+@cache.cached(timeout=5000)
+def search():
+    return handle_search()
 
 
 # tag page

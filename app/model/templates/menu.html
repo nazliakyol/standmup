@@ -1,35 +1,45 @@
 <div class="container pb-3">
 
 
-    <div class="d-grid gap-3" id="video-display"  style="grid-template-columns: 1fr 3fr; ">
+    <div class="d-grid gap-3" id="video-display" style="grid-template-columns: 1fr 3fr; ">
         <div style="display: flex; flex-direction: column; ">
             <aside class="bg-body-tertiary" id="left-menu">
                 {% block content %}
-                <label for="select comedian" style=" top: 0; padding-bottom: 10px;">Select
-                    Comedian</label>
+                <label for="select comedian" style=" top: 0; padding-bottom: 10px;">Select Comedian</label>
                 <ul style="list-style-type: none; overflow-y: scroll; max-height: 300px; position: relative; "
                     id="select comedian">
 
                     {% for id, name, count in all_names %}
                     <li>
-                        <a href="{{url_for('comedian', comedian_id = id) }}">{{ name }}</a> <!-- {{ count }}-->
+                        {% if title == name %}
+                        <a href="{{ url_for('comedian', comedian_id=id) }}" class="selected">{{ name }}</a>
+                        <!-- {{ count }}-->
+                        {% else %}
+                        <a href="{{ url_for('comedian', comedian_id=id) }}">{{ name }}</a>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
                 {% endblock %}
-
                 {% block tag %}
-                <label for="select tag" style=" top: 0; padding-bottom: 10px; padding-top: 40px;">Select
-                    Tag</label>
+                <label for="select tag" style=" top: 0; padding-bottom: 10px; padding-top: 40px;">Select Tag</label>
                 <ul style="list-style-type: none; overflow-y: scroll; max-height: 300px; position: relative;"
                     id="select tag">
 
-                    {% for tag in all_tags %}
-                    <li>
-                        {% set name = tag.name|replace(' ', '-') %}
-                        <a href="{{url_for('tag', tag_id = tag.id, tag_name = name)}}">{{ tag.name }}</a>
-                    </li>
-                    {% endfor %}
+                    {% if selected_tag is not none %}
+                        {% set name = selected_tag.name|replace(' ', '-') %}
+                        <li><a href="{{ url_for('tag', tag_id=selected_tag.id, tag_name=name) }}" class="selected">{{ selected_tag.name }}</a></li>
+                    {% endif %}
+
+                   {% for tag in all_tags %}
+                        <li>
+                            {% set name = tag.name|replace(' ', '-') %}
+                            {% if selected_tag is none or selected_tag.name != tag.name %}
+                                <a href="{{ url_for('tag', tag_id=tag.id, tag_name=name) }}">{{ tag.name }}</a>
+                            {% endif %}
+                        </li>
+                   {% endfor %}
+
                 </ul>
                 {% endblock %}
             </aside>

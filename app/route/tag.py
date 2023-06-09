@@ -45,11 +45,12 @@ def handle_tag(tag_id, tag_name):
 
     total_pages = int(video_count / pagesSize) +1
     title = tag.name
-
+    selected_tag = tag
     return CachedResponse(
         response=make_response(render_template(
         "tag.html",
         title=title,
+        selected_tag=selected_tag,
         all_videos=videos,
         tag=tag,
         page=page,

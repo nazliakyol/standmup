@@ -1,13 +1,15 @@
 {% include "header.html" %}
 {% include "menu.html" %}
 
+
 <div class="bg-body-tertiary">
     <div class="grid" rel="videos">
         {% block body_content %}
+        <h4 class="video-title">{{ search }}</h4>
         <br>
         {% include "displaying.html" %}
         {% endblock %}
-        {% set text = "/?" %}
+        {% set text = "/search?search=" + search  %}
         {% include "paging.html" %}
 
     </div>

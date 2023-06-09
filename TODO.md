@@ -2,10 +2,9 @@ TODO
 
 **css**
 * keep the tag in the artist or tag when clicked 
-* correct the css for search button (ex. make it wider) +++
 * correct the css for fail & success html pages --> osgur
-* delete Jquery
-  
+* add search title to search page
+
 **mobile**
 * create a Mobil version —> put comedians & tags below the videos
   

@@ -52,31 +52,26 @@ def handle_video(video_id):
     ).all()
 
     all_tags = db.session.query(tagdb.Tag).order_by(tagdb.Tag.name.asc()).all()
-
-    video_count = (db.session.query(func.count(videodb.Video.id))
-            .filter(videodb.Video.is_active)
-            .filter_by(id=video_id)
-            .scalar()
-    )
-    total_pages = int(video_count / pagesSize) + 1
-
     title = video.title + " by " + video.comedian.name
+
+    selected_name = None
+    selected_tag = None
 
 
     return CachedResponse(
         response=make_response(render_template(
         "video.html",
         title=title,
+        selected_tag=selected_tag,
+        selected_name=selected_name,
         all_videos=videos,
         other_videos=other_videos,
         all_names=names,
         page=page,
-        video_count=video_count,
         has_more=has_more,
         video=video,
         comedian_videos=comedian_videos,
         video_title=video_title,
-        total_pages=total_pages,
         video_tags=video_tags,
         all_tags=all_tags)), timeout=5000
     )
