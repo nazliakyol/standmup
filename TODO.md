@@ -1,7 +1,6 @@
 TODO
 
 **css**
-* fix html title for comedian & tags & video +++
 * keep the tag in the artist or tag when clicked 
 * correct the css for search button (ex. make it wider) +++
 * correct the css for fail & success html pages --> osgur

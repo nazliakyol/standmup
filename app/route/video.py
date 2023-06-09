@@ -60,7 +60,7 @@ def handle_video(video_id):
     )
     total_pages = int(video_count / pagesSize) + 1
 
-    title = video.title + "by" + video.comedian.name
+    title = video.title + " by " + video.comedian.name
 
 
     return CachedResponse(
