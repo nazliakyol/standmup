@@ -20,5 +20,15 @@
 </div>
 </div>
 
+<script>
+
+let comMenuItem = document.getElementById('menu-comedian-{{comedian.id}}');
+let comMenu = document.getElementById('select-comedian');
+if(comMenuItem){
+    let top = comMenuItem.getBoundingClientRect().top - comMenu.getBoundingClientRect().top
+    comMenu.scrollTo({top: top})
+}
+
+</script>
 
 {% include "footer.html" %}

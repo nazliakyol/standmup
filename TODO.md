@@ -5,6 +5,9 @@ TODO
 * correct the css for fail & success html pages --> osgur
 * add search title to search page
 
+**db**
+* add column for tag table: visible/ display 
+
 **mobile**
 * create a Mobil version —> put comedians & tags below the videos
   
