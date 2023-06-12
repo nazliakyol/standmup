@@ -32,9 +32,11 @@ TODO
 
 
 long-term TODO:
+* write a post on "Hollanda'nın Çalışkan Kadınları - Amsterdam Anneleri" group
+* write a blog in medium
 * add like & unlike
 * add most liked & most watched to search
-* add account system (google login) --> save your liked videos 
+* add account system (google login) --> save your liked videos
 * create flyers & put them on everywhere :)
 * post show HN
 * add dutch stand-up comedians with english subtitle --> add tag: dutch comedy

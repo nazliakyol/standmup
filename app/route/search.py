@@ -30,6 +30,18 @@ def handle_search():
     title = search
     all_tags = db.session.query(tagdb.Tag).order_by(tagdb.Tag.name.asc()).all()
     selected_tag = None
+    tag_counts = (
+        db.session.query(
+            tagdb.Tag.name,
+            func.count(videodb.Video.id)
+        ).join(
+            videodb.video_tag,
+            tagdb.Tag.id == videodb.video_tag.c.tag_id
+        ).join(
+            videodb.Video,
+            videodb.Video.id == videodb.video_tag.c.video_id
+        ).group_by(tagdb.Tag.name).all()
+    )
     video_count = 0
     videos = []
     if search:
@@ -68,6 +80,7 @@ def handle_search():
                                all_tags=all_tags,
                                title=title,
                                selected_tag=selected_tag,
+                               tag_counts=tag_counts
                                )
 
     has_more = True
@@ -87,6 +100,7 @@ def handle_search():
         search=search,
         has_more=has_more,
         all_tags=all_tags,
+        tag_counts=tag_counts,
         total_pages=total_pages)
 
 def handle_search_fail():

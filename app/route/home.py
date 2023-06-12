@@ -63,10 +63,24 @@ def handle_home():
 
     all_tags = db.session.query(tagdb.Tag).order_by(tagdb.Tag.name.asc()).all()
 
+
+    tag_counts = (
+        db.session.query(
+            tagdb.Tag.name,
+            func.count(videodb.Video.id)
+        ).join(
+            videodb.video_tag,
+            tagdb.Tag.id == videodb.video_tag.c.tag_id
+        ).join(
+            videodb.Video,
+            videodb.Video.id == videodb.video_tag.c.video_id
+        ).group_by(tagdb.Tag.name).all()
+    )
     video_count = db.session.query(db.func.count(videodb.Video.id)).scalar()
     total_pages = int(video_count / pagesSize) + 1
-    title = 'f*ck other ways to happify'
+    title = 'f*ck other ways to happy'
     selected_tag = None
+
 
     return CachedResponse(
         response=make_response(render_template('index.html', all_videos=videos,
@@ -77,6 +91,7 @@ def handle_home():
         search=search,
         has_more=has_more,
         all_tags=all_tags,
+        tag_counts=tag_counts,
         total_pages=total_pages)),
         timeout=5000
     )

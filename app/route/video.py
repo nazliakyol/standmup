@@ -52,6 +52,18 @@ def handle_video(video_id):
     ).all()
 
     all_tags = db.session.query(tagdb.Tag).order_by(tagdb.Tag.name.asc()).all()
+    tag_counts = (
+        db.session.query(
+            tagdb.Tag.name,
+            func.count(videodb.Video.id)
+        ).join(
+            videodb.video_tag,
+            tagdb.Tag.id == videodb.video_tag.c.tag_id
+        ).join(
+            videodb.Video,
+            videodb.Video.id == videodb.video_tag.c.video_id
+        ).group_by(tagdb.Tag.name).all()
+    )
     title = video.title + " by " + video.comedian.name
 
     selected_name = None
@@ -63,6 +75,7 @@ def handle_video(video_id):
         "video.html",
         title=title,
         selected_tag=selected_tag,
+        tag_counts=tag_counts,
         selected_name=selected_name,
         all_videos=videos,
         other_videos=other_videos,

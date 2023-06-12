@@ -26,15 +26,20 @@
                 <ul class="active" id="select-tag" style="list-style-type: none; overflow-y: scroll; max-height: 300px; position: relative;">
 
                    {% for tag in all_tags %}
-                        <li>
-                            {% set name = tag.name|replace(' ', '-') %}
-                            {% if selected_tag is none or selected_tag.name != tag.name %}
-                                <a id="menu-tag-{{tag.id}}" href="{{ url_for('tag', tag_id=tag.id, tag_name=name) }}">{{ tag.name }}</a>
-                            {% else %}
-                                <a id="menu-tag-{{tag.id}}" href="{{ url_for('tag', tag_id=tag.id, tag_name=name) }}" class="selected">{{ tag.name }}</a>
+                        {% for tag_name, count in tag_counts %}
+                            {% if tag.name == tag_name and count >= 5 %}
+                                <li>
+                                    {% set name = tag.name|replace(' ', '-') %}
+                                    {% if selected_tag is none or selected_tag.name != tag.name %}
+                                        <a id="menu-tag-{{tag.id}}" href="{{ url_for('tag', tag_id=tag.id, tag_name=name) }}">{{ tag.name }}</a>
+                                    {% else %}
+                                        <a id="menu-tag-{{tag.id}}" href="{{ url_for('tag', tag_id=tag.id, tag_name=name) }}" class="selected">{{ tag.name }}</a>
+                                    {% endif %}
+                                </li>
                             {% endif %}
-                        </li>
-                   {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+
 
                 </ul>
                 {% endblock %}

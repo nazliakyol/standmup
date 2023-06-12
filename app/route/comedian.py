@@ -33,6 +33,18 @@ def handle_comedian(comedian_id):
 
     all_tags = db.session.query(tagdb.Tag).order_by(tagdb.Tag.name.asc()).all()
 
+    tag_counts = (
+        db.session.query(
+            tagdb.Tag.name,
+            func.count(videodb.Video.id)
+        ).join(
+            videodb.video_tag,
+            tagdb.Tag.id == videodb.video_tag.c.tag_id
+        ).join(
+            videodb.Video,
+            videodb.Video.id == videodb.video_tag.c.video_id
+        ).group_by(tagdb.Tag.name).all()
+    )
 
     has_more = True
 
@@ -44,6 +56,7 @@ def handle_comedian(comedian_id):
             .filter_by(comedian_id=comedian_id)
             .scalar()
     )
+
     total_pages = int(video_count / pagesSize) + 1
     title = comedian.name
     selected_name = None
@@ -56,6 +69,7 @@ def handle_comedian(comedian_id):
         title=title,
         selected_name=selected_name,
         selected_tag=selected_tag,
+        tag_counts=tag_counts,
         selected_comedian=selected_comedian,
         all_videos=videos,
         all_names=names,

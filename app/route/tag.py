@@ -1,4 +1,4 @@
-from flask import make_response, request, render_template, url_for, jsonify
+from flask import make_response, request, render_template, jsonify
 from flask_caching import CachedResponse
 from sqlalchemy import func
 from app.model import videodb, comediandb, tagdb
@@ -29,7 +29,18 @@ def handle_tag(tag_id, tag_name):
     ).limit(pagesSize).offset((page - 1) * pagesSize).all()
 
     tag = db.session.query(tagdb.Tag).filter_by(id= tag_id).first()
-
+    tag_counts = (
+        db.session.query(
+            tagdb.Tag.name,
+            func.count(videodb.Video.id)
+        ).join(
+            videodb.video_tag,
+            tagdb.Tag.id == videodb.video_tag.c.tag_id
+        ).join(
+            videodb.Video,
+            videodb.Video.id == videodb.video_tag.c.video_id
+        ).group_by(tagdb.Tag.name).all()
+    )
     if tag is None:
         return make_response(jsonify({"error": "Tag not found"}), 404)
 
@@ -56,6 +67,7 @@ def handle_tag(tag_id, tag_name):
         selected_comedian=selected_comedian,
         all_videos=videos,
         tag=tag,
+        tag_counts=tag_counts,
         page=page,
         has_more=has_more,
         all_tags=all_tags,
