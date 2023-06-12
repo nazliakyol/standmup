@@ -1,39 +1,53 @@
-{% set count = 0 %}
-{% for other_video in other_videos %}
+</div>
+<div class="video-grid" style="display: flex; flex-wrap: wrap;
+        justify-content: space-between;  margin-bottom: -100px;">
+    {% set count = 0 %}
+    {% for other_video in other_videos %}
     {% if other_video.id != video.id %}
-        {% set other_tags = other_video.getTags() %}
-        {% set common_tags = [] %}
-        {% for tag in video.getTags() %}
-            {% if tag in other_tags %}
-                {% set _ = common_tags.append(tag) %}
-            {% endif %}
-        {% endfor %}
+    {% set other_tags = other_video.getTags() %}
+    {% set common_tags = [] %}
+    {% for tag in video.getTags() %}
+    {% if tag in other_tags %}
+    {% set _ = common_tags.append(tag) %}
+    {% endif %}
+    {% endfor %}
 
-        {% if common_tags %}
-            <div class="video" style="margin-bottom: 80px; width: 400px; ">
-                <div class="player-container" style="display: flex; justify-content: space-between; gap: 20px;">
-                    <iframe width="175" height="100" class="player"
-                            src="https://www.youtube.com/embed/{{ other_video.link }}"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
-                </div>
-                <h4 class="video-title"><a
-                        href="{{ url_for('video', video_id=other_video.id) }}" style="text-decoration: none">{{ other_video.title }}</a> by
-                    <a
-                            href="{{ url_for('comedian', comedian_id=other_video.comedian_id) }}" style="text-decoration: none">{{
-                        other_video.comedian.name }}</a></h4>
-                <p class="video-description;">{{ other_video.description }}</p>
-                <div class="tag-list">
-                    {% for tag in other_video.getTags() %}
-                    <a style="text-decoration: none" href="/tags/{{ tag.id }}">#{{ tag.name }}</a>
-                    &nbsp;
-                    {% endfor %}
+    {% if common_tags %}
+    <div class="video" style="margin-bottom: 100px; width: 280px; ">
+        <div class="player-container" style="position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%;">
+            <iframe width="175" height="100" class="player" style=" position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;"
+                    src="https://www.youtube.com/embed/{{ other_video.link }}"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+        </div>
+        <div class="video-details" style="text-align: center;">
 
-                </div>
+            <h4 class="video-title" style=" margin:10px 0; text-decoration: none;"><a
+                    href="{{ url_for('video', video_id=other_video.id) }}" style="text-decoration: none">{{
+                other_video.title }}</a> by
+                <a
+                        href="{{ url_for('comedian', comedian_id=other_video.comedian_id) }}"
+                        style="text-decoration: none">{{
+                    other_video.comedian.name }}</a></h4>
+            <p class="video-description;" style="margin 0px;">{{ other_video.description }}</p>
+            <div class="tag-list" style="margin-right: 5px;">
+                {% for tag in other_video.getTags() %}
+                <a style="text-decoration: none" href="/tags/{{ tag.id }}">#{{ tag.name }}</a>
+                &nbsp;
+                {% endfor %}
             </div>
-        {% endif %}
+        </div>
+    </div>
+    {% endif %}
 
     {% endif %}
 
-{% endfor %}
+    {% endfor %}

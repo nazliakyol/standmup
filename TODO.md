@@ -1,9 +1,7 @@
 TODO
 
 **css**
-* keep the tag in the artist or tag when clicked 
 * correct the css for fail & success html pages --> osgur
-* add search title to search page
 
 **db**
 * add column for tag table: visible/ display 
@@ -13,8 +11,7 @@ TODO
   
 **testing**
 * put related videos side by side on single video page 
-* keep the addVieo test for now --> is it working ----> NOT TESTED:
-  !! show the module not found error (for app module) to osgur!!
+* keep the addVieo test for now --> is it working (module not found error for app module)----> NOT TESTED!
 * add testing (if everything's ok --> merge master) --> osgur
   
 **admin panel**
