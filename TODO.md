@@ -17,8 +17,7 @@ TODO
 * add some stat to admin panel home page
    
 **refactoring**
-* refactoring --> Flask application instance --> remove it from db file 
-* refactoring --> remove template & static modules from model directory
+* refactoring --> remove template & static modules from model directory --> route.api is not working (circular import)
 
 **github**
 * delete unnecessary branches
@@ -27,6 +26,7 @@ TODO
 
 
 long-term TODO:
+* add dutch stand-up comedians with english subtitle --> add tag: dutch comedy
 * write a post on "Hollanda'nın Çalışkan Kadınları - Amsterdam Anneleri" group
 * write a blog in medium
 * add like & unlike
@@ -34,7 +34,6 @@ long-term TODO:
 * add account system (google login) --> save your liked videos
 * create flyers & put them on everywhere :)
 * post show HN
-* add dutch stand-up comedians with english subtitle --> add tag: dutch comedy
 * share the website on Linkedin: a website for stand-up enthusiasts.
 * add site link to the CV 
 * send it to NextGear 
