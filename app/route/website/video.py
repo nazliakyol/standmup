@@ -3,14 +3,17 @@ from operator import not_
 from flask import make_response, jsonify, request, render_template
 from flask_caching import CachedResponse
 from sqlalchemy import func
-
 from app.model.comediandb import Comedian
-from app.model.db import db
+from app.model import db
 from app.model.tagdb import Tag
 from app.model.videodb import Video, video_tag
-from application import pagesSize
+from app.service.cache import cache
+from app.route.website import bp, pagesSize
 
 
+# video page
+@bp.route("/videos/<video_id>", methods=["GET"])
+@cache.cached(timeout=5000)
 def handle_video(video_id):
     names = (
         db.session.query(Comedian.id, Comedian.name, func.count(Video.id))

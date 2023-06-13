@@ -9,10 +9,16 @@ from app.model.videodb import Video
 from app.model.youtubeLinkdb import YoutubeLink
 from app.model import db
 
+# api page
+from app.route.api import bp
 
+
+@bp.route("/api")
 def handle_api():
     return render_template("api.html")
 
+# submit form page
+@bp.route('/api/submit', methods=['POST'])
 def handle_submit():
     youtube_link = request.form.get('youtube_link')
     message = request.form.get('message')
@@ -36,18 +42,23 @@ def handle_submit():
             print("YouTube link not provided.")
             return redirect(url_for('fail'))
 
-
+# submit fail page
+@bp.route('/api/fail')
 def handle_fail():
     return render_template('fail.html')
 
-
+# submit success page
+@bp.route('/api/success')
 def handle_success():
     return render_template('success.html')
 
-
+@bp.route("/api/videos", methods=["POST"])
 def handle_addVideo():
-    # if application.config["ENV"] != 'dev':
-    #    throw Exception('olala')
+    #if application.config["ENV"] == 'development':
+    #    return handle_addVideo()
+    #else:
+    #    return make_response(jsonify({"error": "Not authorized."}), 401)
+
     content = request.json
 
     new_video = Video(
@@ -66,13 +77,16 @@ def handle_addVideo():
 
 
 # made some changes here!! how to use video_id and what is the meaning of this error: "
+# get video by id
+@bp.route("/api/videos/<video_id>", methods=["GET"])
 def handle_getVideo(video_id):
     video = Video.query.get(video_id)
     if video is None:
         return make_response(jsonify({"error": "Video not found"}), 404)
     return json.dumps(video.to_dict())
 
-
+# get all comedian names with count
+@bp.route("/api/comedians", methods=["GET"])
 def handle_getCountByName():
     names = (
         db.session.query(Comedian.name, func.count(Video.id))
@@ -87,7 +101,8 @@ def handle_getCountByName():
     return json.dumps(response)
 
 
-
+# get all comedians
+@bp.route("/api/comedians/all", methods=["GET"])
 def handle_allComedians():
     comedians = db.session.query(Comedian).all()
     if not comedians:
@@ -96,13 +111,15 @@ def handle_allComedians():
     return json.dumps(response)
 
 
-
+# get videos by comedian
+@bp.route("/api/comedians/<id>/videos", methods=["GET"])
 def handle_getVideoByComedian(id):
     comedians = Video.query.filter_by(comedian_id=id).all()
     response = [comedian.to_dict() for comedian in comedians]
     return json.dumps(response)
 
-
+# get all videos
+@bp.route("/api/videos/all", methods=["GET"])
 def handle_allVideos():
     args = request.args
     limit = args.get("limit")
@@ -120,20 +137,29 @@ def handle_allVideos():
     return json.dumps(response)
 
 
-
+# get random video
+@bp.route("/api/random", methods=["GET"])
 def handle_order_by_random():
     random = Video.query.order_by(func.random()).first()
     return json.dumps(random.to_dict())
 
-
+# delete video by id
+@bp.route("/api/videos/<video_id>", methods=["DELETE"])
 def handle_delete_video(video_id):
     video = Video.query.get(video_id)
     db.session.delete(video)
     db.session.commit()
     return json.dumps(video.to_dict())
 
+    #if application.config["ENV"] == 'development':
+    #    return handle_delete_video()
+    #else:
+    #    return make_response(jsonify({"error": "Not authorized."}), 401)
 
 
+
+# show stat
+@bp.route("/api/stat", methods=["GET"])
 def handle_stat():
     total_video_count = db.session.query(db.func.count(Video.id)).scalar()
     total_comedian_count = db.session.query(db.func.count(Comedian.id)).scalar()

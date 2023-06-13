@@ -4,10 +4,13 @@ from sqlalchemy import func
 from app.model.comediandb import Comedian
 from app.model.tagdb import Tag
 from app.model.videodb import Video, video_tag
-from application import pagesSize
+from app.route.website import bp, pagesSize
+from app.service.cache import cache
 from app.model import db
 
-
+# comedian page
+@bp.route("/comedians/<comedian_id>", methods=["GET"])
+@cache.cached(timeout=5000)
 def handle_comedian(comedian_id):
     names = (
         db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
