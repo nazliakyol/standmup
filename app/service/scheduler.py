@@ -2,9 +2,10 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from app.service.videos import addVideoAuto
 from app.service.youtube import runYoutubeAuto
 
+scheduler = None
 
 def start_scheduler():
-
+    global scheduler
     scheduler = BackgroundScheduler()
 
     scheduler.add_job(addVideoAuto, 'interval', hours=12, id='my_new_video')

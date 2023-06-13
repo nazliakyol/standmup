@@ -2,11 +2,11 @@ import requests
 import re
 import os
 from sqlalchemy.exc import IntegrityError
-from app.model import comediandb, videodb
-from application import application, db
+
+from app.model import comediandb, videodb, db
+from application import application
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-
 
 def isMatch(name):
     comedian_names = [comediandb.Comedian.name for comediandb.Comedian in comediandb.Comedian.query.all()]
@@ -23,7 +23,6 @@ def getComedianId(name):
     return id
 
 def runYoutubeAuto():
-
     with application.app_context():
         class YouTube:
             nameRegex = re.compile(".+?(?=--|-|\/|\|)")
@@ -70,7 +69,4 @@ def runYoutubeAuto():
                 error_message = "Duplicate entry error occurred"
                 print(error_message + ": " + link)
 
-
-if __name__ == "__main__":
-    runYoutubeAuto()
 

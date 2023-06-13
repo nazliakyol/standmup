@@ -2,9 +2,7 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from wtforms import SelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
-from app.model import tagdb, videodb, comediandb, youtubeLinkdb
-from application import application, db
-
+from app.model import tagdb, videodb, comediandb, youtubeLinkdb, db
 
 class VideoModelView(ModelView):
     form_excluded_columns = ('creation_date',)
@@ -23,9 +21,11 @@ class VideoModelView(ModelView):
     def on_model_change(self, form, model, is_created):
         model.tags = tagdb.Tag.query.filter(tagdb.Tag.id.in_(form.tags.data)).all()
 
-admin = Admin(application)
+admin = None
 
-def start_admin():
+def start_admin(app):
+    global admin
+    admin = Admin(app)
     admin.add_view(VideoModelView(videodb.Video, db.session))
     admin.add_view(ModelView(comediandb.Comedian, db.session))
     admin.add_view(ModelView(tagdb.Tag, db.session))

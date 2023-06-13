@@ -2,6 +2,10 @@ import os
 
 from flask import Flask
 from app.model import db
+from app.service.admin import start_admin
+#from app.service.scheduler import start_scheduler
+from app.route.api import bp as api_bp
+from app.route.website import bp as website_bp, cache
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -36,18 +40,14 @@ print(f'env: {application.config["ENV"]}, dbhost: {application.config["DB_HOST"]
 
 db.init_app(application)
 
-from app.route.api import bp as api_bp
-from app.route.website import bp as website_bp, cache
-
 application.register_blueprint(api_bp)
 application.register_blueprint(website_bp)
+
 cache.init_app(application)
 
-# from app.service.admin import start_admin
-# from app.service.auto import start_scheduler
-# start_scheduler()
-# if application.config["ENV"] == 'development':
-#     start_admin()
-#
+#start_scheduler()
+if application.config["ENV"] == 'development':
+    start_admin(application)
+
 if __name__ == "__main__":
     application.run(host="0.0.0.0", port=5000)
