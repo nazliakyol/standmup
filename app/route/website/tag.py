@@ -6,8 +6,7 @@ from app.model.comediandb import Comedian
 from app.model import db
 from app.model.tagdb import Tag
 from app.model.videodb import Video, video_tag
-from app.service.cache import cache
-from app.route.website import bp, pagesSize
+from app.route.website import bp, cache, pagesSize
 
 
 # tag page

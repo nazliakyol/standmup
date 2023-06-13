@@ -4,8 +4,7 @@ from sqlalchemy import func
 from app.model.comediandb import Comedian
 from app.model.tagdb import Tag
 from app.model.videodb import Video, video_tag
-from app.route.website import bp, pagesSize
-from app.service.cache import cache
+from app.route.website import bp, cache, pagesSize
 from app.model import db
 
 # comedian page
