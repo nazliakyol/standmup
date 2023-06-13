@@ -1,4 +1,4 @@
-from app.model.db import db, application
+from application import application, db
 
 
 # data youtubeLink

@@ -1,4 +1,4 @@
-from app.model.db import db, application
+from application import application, db
 
 # data comedian
 class Comedian(db.Model):
@@ -13,6 +13,7 @@ class Comedian(db.Model):
 
     def to_dict(self):
         return {"id": self.id, "name": self.name, "description": self.description}
+
 
 with application.app_context():
     db.create_all()

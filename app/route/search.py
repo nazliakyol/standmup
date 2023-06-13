@@ -1,19 +1,21 @@
 from operator import or_
 
-from flask import make_response, jsonify, request, render_template, url_for, redirect
-from flask_caching import CachedResponse
+from flask import make_response, jsonify, request, render_template
 from sqlalchemy import func, desc
 
-from app.model import videodb, tagdb, comediandb
-from app.model.db import pagesSize, db
+from app.model.comediandb import Comedian
+from app.model.db import db
+from app.model.tagdb import Tag
+from app.model.videodb import Video, video_tag
+from application import pagesSize
 
 
 def handle_search():
     names = (
-        db.session.query(comediandb.Comedian.id, comediandb.Comedian.name, func.count(videodb.Video.id))
-            .join(videodb.Video)
-            .group_by(comediandb.Comedian.id)
-            .order_by(comediandb.Comedian.name.asc())
+        db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
+            .join(Video)
+            .group_by(Comedian.id)
+            .order_by(Comedian.name.asc())
             .all()
     )
 
@@ -28,47 +30,47 @@ def handle_search():
 
     search = args.get("search")
     title = search
-    all_tags = db.session.query(tagdb.Tag).order_by(tagdb.Tag.name.asc()).all()
+    all_tags = db.session.query(Tag).order_by(Tag.name.asc()).all()
     selected_tag = None
     tag_counts = (
         db.session.query(
-            tagdb.Tag.name,
-            func.count(videodb.Video.id)
+            Tag.name,
+            func.count(Video.id)
         ).join(
-            videodb.video_tag,
-            tagdb.Tag.id == videodb.video_tag.c.tag_id
+            video_tag,
+            Tag.id == video_tag.c.tag_id
         ).join(
-            videodb.Video,
-            videodb.Video.id == videodb.video_tag.c.video_id
-        ).group_by(tagdb.Tag.name).all()
+            Video,
+            Video.id == video_tag.c.video_id
+        ).group_by(Tag.name).all()
     )
     video_count = 0
     videos = []
     if search:
         videos = (
-            db.session.query(videodb.Video).filter(videodb.Video.is_active).outerjoin(videodb.video_tag).outerjoin(tagdb.Tag).filter(
+            db.session.query(Video).filter(Video.is_active).outerjoin(video_tag).outerjoin(Tag).filter(
                 or_(
                     or_(
-                        videodb.Video.title.ilike(f"%{search}%"),
-                        videodb.Video.description.ilike(f"%{search}%"),
+                        Video.title.ilike(f"%{search}%"),
+                        Video.description.ilike(f"%{search}%"),
                     ),
-                    tagdb.Tag.name.ilike(f"%{search}%")
+                    Tag.name.ilike(f"%{search}%")
                 )
 
-            ).order_by(desc(videodb.Video.creation_date))
+            ).order_by(desc(Video.creation_date))
                 .limit(pagesSize)
                 .offset((page - 1) * pagesSize)
                 .all()
         )
 
-        video_count = db.session.query(db.func.count(videodb.Video.id)).filter(videodb.Video.is_active).outerjoin(
-            videodb.video_tag).outerjoin(tagdb.Tag).filter(
+        video_count = db.session.query(db.func.count(Video.id)).filter(Video.is_active).outerjoin(
+            video_tag).outerjoin(Tag).filter(
             or_(
                 or_(
-                    videodb.Video.title.ilike(f"%{search}%"),
-                    videodb.Video.description.ilike(f"%{search}%"),
+                    Video.title.ilike(f"%{search}%"),
+                    Video.description.ilike(f"%{search}%"),
                 ),
-                tagdb.Tag.name.ilike(f"%{search}%")
+                Tag.name.ilike(f"%{search}%")
             )).scalar()
 
 

@@ -2,8 +2,12 @@ import json
 from flask import make_response, jsonify, request, render_template, redirect, url_for
 from sqlalchemy import func
 
-from app.model import videodb, tagdb, comediandb, youtubeLinkdb
-from app.model.db import db
+from app.model.comediandb import Comedian
+from app.model.tagdb import Tag
+from app.model.videodb import Video
+
+from app.model.youtubeLinkdb import YoutubeLink
+from application import db
 
 
 def handle_api():
@@ -12,9 +16,9 @@ def handle_api():
 def handle_submit():
     youtube_link = request.form.get('youtube_link')
     message = request.form.get('message')
-    video_link = youtubeLinkdb.YoutubeLink(youtube_link=youtube_link, message=message)
+    video_link = YoutubeLink(youtube_link=youtube_link, message=message)
 
-    count = db.session.query(func.count(youtubeLinkdb.YoutubeLink.id)).scalar()
+    count = db.session.query(func.count(YoutubeLink.id)).scalar()
     if count > 100:
         print("Server is overload.")
         return redirect(url_for('fail'))
@@ -46,7 +50,7 @@ def handle_addVideo():
     #    throw Exception('olala')
     content = request.json
 
-    new_video = videodb.Video(
+    new_video = Video(
         comedian_id=content["comedian_id"],
         title=content["title"],
         link=content["link"],
@@ -63,7 +67,7 @@ def handle_addVideo():
 
 # made some changes here!! how to use video_id and what is the meaning of this error: "
 def handle_getVideo(video_id):
-    video = videodb.Video.query.get(video_id)
+    video = Video.query.get(video_id)
     if video is None:
         return make_response(jsonify({"error": "Video not found"}), 404)
     return json.dumps(video.to_dict())
@@ -71,9 +75,9 @@ def handle_getVideo(video_id):
 
 def handle_getCountByName():
     names = (
-        db.session.query(comediandb.Comedian.name, func.count(videodb.Video.id))
-            .join(videodb.Video)
-            .group_by(comediandb.Comedian.id)
+        db.session.query(Comedian.name, func.count(Video.id))
+            .join(Video)
+            .group_by(Comedian.id)
             .all()
     )
     if not names:
@@ -85,7 +89,7 @@ def handle_getCountByName():
 
 
 def handle_allComedians():
-    comedians = db.session.query(comediandb.Comedian).all()
+    comedians = db.session.query(Comedian).all()
     if not comedians:
         return make_response(jsonify({"error": "No comedians found"}), 404)
     response = [comedian.to_dict() for comedian in comedians]
@@ -94,7 +98,7 @@ def handle_allComedians():
 
 
 def handle_getVideoByComedian(id):
-    comedians = videodb.Video.query.filter_by(comedian_id=id).all()
+    comedians = Video.query.filter_by(comedian_id=id).all()
     response = [comedian.to_dict() for comedian in comedians]
     return json.dumps(response)
 
@@ -104,7 +108,7 @@ def handle_allVideos():
     limit = args.get("limit")
     search = args.get("search")
 
-    query = db.session.query(videodb.Video)
+    query = db.session.query(Video)
 
     if limit:
         query.limit(limit)
@@ -118,12 +122,12 @@ def handle_allVideos():
 
 
 def handle_order_by_random():
-    random = videodb.Video.query.order_by(func.random()).first()
+    random = Video.query.order_by(func.random()).first()
     return json.dumps(random.to_dict())
 
 
 def handle_delete_video(video_id):
-    video = videodb.Video.query.get(video_id)
+    video = Video.query.get(video_id)
     db.session.delete(video)
     db.session.commit()
     return json.dumps(video.to_dict())
@@ -131,14 +135,14 @@ def handle_delete_video(video_id):
 
 
 def handle_stat():
-    total_video_count = db.session.query(db.func.count(videodb.Video.id)).scalar()
-    total_comedian_count = db.session.query(db.func.count(comediandb.Comedian.id)).scalar()
-    total_tag_count = db.session.query(db.func.count(tagdb.Tag.id)).scalar()
+    total_video_count = db.session.query(db.func.count(Video.id)).scalar()
+    total_comedian_count = db.session.query(db.func.count(Comedian.id)).scalar()
+    total_tag_count = db.session.query(db.func.count(Tag.id)).scalar()
     names = (
-        db.session.query(comediandb.Comedian.id, comediandb.Comedian.name, func.count(videodb.Video.id))
-            .join(videodb.Video)
-            .group_by(comediandb.Comedian.id)
-            .order_by(comediandb.Comedian.name.asc())
+        db.session.query(Comedian.id,Comedian.name, func.count(Video.id))
+            .join(Video)
+            .group_by(Comedian.id)
+            .order_by(Comedian.name.asc())
             .all()
     )
     result = {

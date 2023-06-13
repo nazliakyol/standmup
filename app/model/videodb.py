@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import DateTime
 
 from app.model import tagdb
-from app.model.db import db, application
+from application import application, db
 
 # video_tag table
 video_tag = db.Table('video_tag',

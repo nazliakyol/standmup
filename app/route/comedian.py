@@ -1,16 +1,18 @@
 from flask import make_response, jsonify, request, render_template
 from flask_caching import CachedResponse
 from sqlalchemy import func
-from app.model import videodb, tagdb, comediandb
-from app.model.db import pagesSize, db
+from app.model.comediandb import Comedian
+from app.model.tagdb import Tag
+from app.model.videodb import Video, video_tag
+from application import pagesSize, db
 
 
 def handle_comedian(comedian_id):
     names = (
-        db.session.query(comediandb.Comedian.id, comediandb.Comedian.name, func.count(videodb.Video.id))
-            .join(videodb.Video)
-            .group_by(comediandb.Comedian.id)
-            .order_by(comediandb.Comedian.name.asc())
+        db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
+            .join(Video)
+            .group_by(Comedian.id)
+            .order_by(Comedian.name.asc())
             .all()
     )
 
@@ -20,30 +22,30 @@ def handle_comedian(comedian_id):
         page = int(args.get("page"))
 
     videos = (
-        db.session.query(videodb.Video).filter((videodb.Video.is_active))
+        db.session.query(Video).filter((Video.is_active))
             .filter_by(comedian_id=comedian_id)
             .limit(pagesSize)
             .offset((page - 1) * pagesSize)
             .all()
     )
 
-    comedian = db.session.query(comediandb.Comedian).filter_by(id= comedian_id).first()
+    comedian = db.session.query(Comedian).filter_by(id= comedian_id).first()
     if comedian is None:
         return make_response(jsonify({"error": "Comedian not found"}), 404)
 
-    all_tags = db.session.query(tagdb.Tag).order_by(tagdb.Tag.name.asc()).all()
+    all_tags = db.session.query(Tag).order_by(Tag.name.asc()).all()
 
     tag_counts = (
         db.session.query(
-            tagdb.Tag.name,
-            func.count(videodb.Video.id)
+            Tag.name,
+            func.count(Video.id)
         ).join(
-            videodb.video_tag,
-            tagdb.Tag.id == videodb.video_tag.c.tag_id
+            video_tag,
+            Tag.id == video_tag.c.tag_id
         ).join(
-            videodb.Video,
-            videodb.Video.id == videodb.video_tag.c.video_id
-        ).group_by(tagdb.Tag.name).all()
+            Video,
+            Video.id == video_tag.c.video_id
+        ).group_by(Tag.name).all()
     )
 
     has_more = True
@@ -51,8 +53,8 @@ def handle_comedian(comedian_id):
     if len(videos) < pagesSize:
         has_more = False
 
-    video_count = (db.session.query(func.count(videodb.Video.id))
-            .filter(videodb.Video.is_active)
+    video_count = (db.session.query(func.count(Video.id))
+            .filter(Video.is_active)
             .filter_by(comedian_id=comedian_id)
             .scalar()
     )

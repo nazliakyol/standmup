@@ -1,14 +1,13 @@
 import os
 
-from flask import make_response, jsonify
+from flask import make_response, jsonify, Flask
 
-from app.model.db import application
-from app.route.api import handle_api, handle_success, handle_addVideo, handle_fail, handle_submit, handle_getVideo, \
+from app.route.api import handle_api, handle_submit, handle_fail, handle_success, handle_addVideo, handle_getVideo, \
     handle_getCountByName, handle_allComedians, handle_getVideoByComedian, handle_allVideos, handle_order_by_random, \
     handle_delete_video, handle_stat
 from app.route.comedian import handle_comedian
 from app.route.home import handle_home
-from app.route.search import handle_search, handle_search_fail
+from app.route.search import handle_search
 from app.route.tag import handle_tag
 from app.route.video import handle_video
 from app.service.admin import start_admin
@@ -16,7 +15,25 @@ from app.service.auto import start_scheduler
 from app.service.cache import cache
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+pagesSize = 10
 
+application = Flask(__name__, template_folder="templates")
+
+application.config["DB_PASS"] = "zoot"
+application.config["DB_HOST"] = "localhost"
+application.config["DB_USER"] = "root"
+# application.config["SQLALCHEMY_ECHO"] = True
+application.config.from_prefixed_env()
+print(f'env: {application.config["ENV"]}, dbhost: {application.config["DB_HOST"]}')
+
+# connect to db
+application.config[
+    "SQLALCHEMY_DATABASE_URI"
+] = f"mysql+pymysql://{application.config['DB_USER']}:{application.config['DB_PASS']}@{application.config['DB_HOST']}/standapi"
+application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy(application)
 
 # home page
 @application.route("/", methods=["GET"])
@@ -140,6 +157,7 @@ def stat():
 start_scheduler()
 if application.config["ENV"] == 'development':
     start_admin()
+
 
 if __name__ == "__main__":
     application.run(host="0.0.0.0", port=5000)

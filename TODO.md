@@ -10,7 +10,6 @@ TODO
 * create a Mobil version —> put comedians & tags below the videos
   
 **testing**
-* put related videos side by side on single video page 
 * keep the addVieo test for now --> is it working (module not found error for app module)----> NOT TESTED!
 * add testing (if everything's ok --> merge master) --> osgur
   

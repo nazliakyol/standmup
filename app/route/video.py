@@ -3,16 +3,20 @@ from operator import not_
 from flask import make_response, jsonify, request, render_template
 from flask_caching import CachedResponse
 from sqlalchemy import func
-from app.model import videodb, tagdb, comediandb
-from app.model.db import pagesSize, db
+
+from app.model.comediandb import Comedian
+from app.model.db import db
+from app.model.tagdb import Tag
+from app.model.videodb import Video, video_tag
+from application import pagesSize
 
 
 def handle_video(video_id):
     names = (
-        db.session.query(comediandb.Comedian.id, comediandb.Comedian.name, func.count(videodb.Video.id))
-            .join(videodb.Video)
-            .group_by(comediandb.Comedian.id)
-            .order_by(comediandb.Comedian.name.asc())
+        db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
+            .join(Video)
+            .group_by(Comedian.id)
+            .order_by(Comedian.name.asc())
             .all()
     )
 
@@ -22,7 +26,7 @@ def handle_video(video_id):
         page = int(args.get("page"))
 
     videos = (
-        db.session.query(videodb.Video).filter((videodb.Video.is_active))
+        db.session.query(Video).filter((Video.is_active))
             .filter_by(id=video_id)
             .limit(pagesSize)
             .offset((page - 1) * pagesSize)
@@ -33,36 +37,36 @@ def handle_video(video_id):
 
     if len(videos) < pagesSize:
         has_more = False
-    video = db.session.query(videodb.Video).filter_by(id=video_id).first()
+    video = db.session.query(Video).filter_by(id=video_id).first()
     other_videos = (
-        db.session.query(videodb.Video)
-            .filter(videodb.Video.is_active)
-            .filter(not_(videodb.Video.id == videos[videos.index(video)].id))
+        db.session.query(Video)
+            .filter(Video.is_active)
+            .filter(not_(Video.id == videos[videos.index(video)].id))
             .limit(30)
             .all()
     )
 
     video_tags = video.getTags()
-    video_title = db.session.query(videodb.Video.title).filter_by(id= video_id).first()
+    video_title = db.session.query(Video.title).filter_by(id= video_id).first()
     if video is None:
         return make_response(jsonify({"error": "Video not found"}), 404)
 
-    comedian_videos = db.session.query(videodb.Video).join(comediandb.Comedian).filter(
-        videodb.Video.comedian_id == comediandb.Comedian.id
+    comedian_videos = db.session.query(Video).join(Comedian).filter(
+        Video.comedian_id == Comedian.id
     ).all()
 
-    all_tags = db.session.query(tagdb.Tag).order_by(tagdb.Tag.name.asc()).all()
+    all_tags = db.session.query(Tag).order_by(Tag.name.asc()).all()
     tag_counts = (
         db.session.query(
-            tagdb.Tag.name,
-            func.count(videodb.Video.id)
+            Tag.name,
+            func.count(Video.id)
         ).join(
-            videodb.video_tag,
-            tagdb.Tag.id == videodb.video_tag.c.tag_id
+            video_tag,
+            Tag.id == video_tag.c.tag_id
         ).join(
-            videodb.Video,
-            videodb.Video.id == videodb.video_tag.c.video_id
-        ).group_by(tagdb.Tag.name).all()
+            Video,
+            Video.id == video_tag.c.video_id
+        ).group_by(Tag.name).all()
     )
     title = video.title + " by " + video.comedian.name
 
