@@ -1,6 +1,6 @@
-from application import application, db
+from app.model import db
 
-# data comedian
+
 class Comedian(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(250), unique=True, nullable=False)
@@ -14,6 +14,3 @@ class Comedian(db.Model):
     def to_dict(self):
         return {"id": self.id, "name": self.name, "description": self.description}
 
-
-with application.app_context():
-    db.create_all()

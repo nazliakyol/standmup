@@ -4,7 +4,8 @@ from sqlalchemy import func
 from app.model.comediandb import Comedian
 from app.model.tagdb import Tag
 from app.model.videodb import Video, video_tag
-from application import pagesSize, db
+from application import pagesSize
+from app.model import db
 
 
 def handle_comedian(comedian_id):

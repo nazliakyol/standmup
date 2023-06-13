@@ -1,5 +1,4 @@
-from application import application, db
-
+from app.model import db
 
 # data tag
 class Tag(db.Model):
@@ -10,10 +9,7 @@ class Tag(db.Model):
     def __init__(self, id, name, is_visible):
         self.id = id
         self.name = name
-        self.is_active = is_visible
+        self.is_visible = is_visible
 
     def to_dict(self):
         return {"id": self.id, "name": self.name, "is_visible": self.is_visible}
-
-with application.app_context():
-    db.create_all()

@@ -2,6 +2,7 @@ import os
 
 from flask import make_response, jsonify, Flask
 
+from app.model import db
 from app.route.api import handle_api, handle_submit, handle_fail, handle_success, handle_addVideo, handle_getVideo, \
     handle_getCountByName, handle_allComedians, handle_getVideoByComedian, handle_allVideos, handle_order_by_random, \
     handle_delete_video, handle_stat
@@ -32,8 +33,8 @@ application.config[
 ] = f"mysql+pymysql://{application.config['DB_USER']}:{application.config['DB_PASS']}@{application.config['DB_HOST']}/standapi"
 application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy(application)
+db.init_app(application)
+
 
 # home page
 @application.route("/", methods=["GET"])

@@ -7,7 +7,7 @@ from app.model.tagdb import Tag
 from app.model.videodb import Video
 
 from app.model.youtubeLinkdb import YoutubeLink
-from application import db
+from app.model import db
 
 
 def handle_api():

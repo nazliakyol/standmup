@@ -1,5 +1,4 @@
-from application import application, db
-
+from app.model import db
 
 # data youtubeLink
 class YoutubeLink(db.Model):
@@ -14,6 +13,3 @@ class YoutubeLink(db.Model):
     def to_dict(self):
         return {"id": self.id, "youtube_link": self.youtube_link, "message": self.message}
 
-
-with application.app_context():
-    db.create_all()
