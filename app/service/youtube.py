@@ -3,7 +3,7 @@ import re
 import os
 from sqlalchemy.exc import IntegrityError
 from app.model import comediandb, videodb
-from app.model.db import db, application
+from application import application, db
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 

@@ -3,7 +3,7 @@ from flask_admin.contrib.sqla import ModelView
 from wtforms import SelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from app.model import tagdb, videodb, comediandb, youtubeLinkdb
-from app.model.db import application, db
+from application import application, db
 
 
 class VideoModelView(ModelView):

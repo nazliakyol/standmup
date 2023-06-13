@@ -1,5 +1,6 @@
 from flask_caching import Cache, CachedResponse
-from app.model.db import application
+
+from application import application
 
 cache = Cache(application)
 

@@ -1,6 +1,6 @@
 from sqlalchemy import desc
 from app.model import videodb
-from app.model.db import db, application
+from application import application, db
 
 # add video automatically
 def addVideoAuto():
