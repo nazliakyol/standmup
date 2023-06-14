@@ -2,11 +2,11 @@ import json
 from flask import make_response, jsonify, request, render_template, redirect, url_for
 from sqlalchemy import func
 
-from app.model.comediandb import Comedian
-from app.model.tagdb import Tag
-from app.model.videodb import Video
+from app.model.comedian import Comedian
+from app.model.tag import Tag
+from app.model.video import Video
 
-from app.model.youtubeLinkdb import YoutubeLink
+from app.model.youtubeLink import YoutubeLink
 from app.model import db
 
 # api page

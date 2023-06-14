@@ -13,10 +13,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 application = Flask(__name__, template_folder="templates")
 
 # config
-application.config["DB_PASS"] = "zoot"
-application.config["DB_HOST"] = "localhost"
-application.config["DB_USER"] = "root"
-# application.config["SQLALCHEMY_ECHO"] = True
+
 application.config.from_prefixed_env()
 debug = application.config["ENV"] == 'development'
 
@@ -25,6 +22,8 @@ application.config[
     "SQLALCHEMY_DATABASE_URI"
 ] = f"mysql+pymysql://{application.config['DB_USER']}:{application.config['DB_PASS']}@{application.config['DB_HOST']}/standapi"
 application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+if debug:
+    application.config["SQLALCHEMY_ECHO"] = True
 
 cacheType = "SimpleCache"
 if debug:

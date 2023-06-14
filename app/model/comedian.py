@@ -1,5 +1,6 @@
-from app.model import db
+from sqlalchemy import func
 
+from app.model import db
 
 class Comedian(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -13,3 +14,18 @@ class Comedian(db.Model):
 
     def to_dict(self):
         return {"id": self.id, "name": self.name, "description": self.description}
+
+from app.model.video import Video
+
+def getComedianNames():
+    return (
+        db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
+            .join(Video)
+            .group_by(Comedian.id)
+            .order_by(Comedian.name.asc())
+            .all()
+    )
+
+
+def getComedianById(comedian_id):
+    return db.session.query(Comedian).filter_by(id=comedian_id).first()

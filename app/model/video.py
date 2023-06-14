@@ -1,10 +1,9 @@
 from datetime import datetime
-from sqlalchemy import DateTime
+from sqlalchemy import DateTime, func, desc, or_
 
-from app.model import tagdb
 from app.model import db
+from app.model.tag import Tag
 
-# video_tag table
 video_tag = db.Table('video_tag',
                      db.Column('video_id', db.String(36), db.ForeignKey('video.id')),
                      db.Column('tag_id', db.String(36), db.ForeignKey('tag.id'))
@@ -34,8 +33,8 @@ class Video(db.Model):
         self.tags = []
 
     def getTags(self):
-        tags = db.session.query(tagdb.Tag).join(video_tag).join(Video).filter(
-            video_tag.c.video_id == self.id).order_by(tagdb.Tag.name.asc()).limit(6).all()
+        tags = db.session.query(Tag).join(video_tag).join(Video).filter(
+            video_tag.c.video_id == self.id).order_by(Tag.name.asc()).limit(6).all()
         return tags
 
     def to_dict(self):
@@ -51,4 +50,55 @@ class Video(db.Model):
             "is_ready": self.is_ready
 
         }
+
+
+def getVideos(page, pagesSize=10):
+    return (
+            db.session.query(Video)
+                .filter((Video.is_active))
+                .order_by(desc(Video.creation_date))
+                .limit(pagesSize)
+                .offset((page - 1) * pagesSize)
+                .all()
+        )
+
+def searchVideos(search, page, pagesSize=10):
+    return (
+        db.session.query(Video)
+            .filter((Video.is_active))
+            .outerjoin(video_tag)
+            .outerjoin(Tag).filter(
+                or_(
+                    or_(
+                        Video.title.ilike(f"%{search}%"),
+                        Video.description.ilike(f"%{search}%"),
+                    ),
+                    Tag.name.ilike(f"%{search}%")
+                )
+            ).order_by(desc(Video.creation_date))
+            .limit(pagesSize)
+            .offset((page - 1) * pagesSize)
+            .all()
+    )
+
+def getVideosByComedianId(comedian_id, page, pagesSize=10):
+    return (
+        db.session.query(Video)
+            .filter((Video.is_active))
+            .filter_by(comedian_id=comedian_id)
+            .limit(pagesSize)
+            .offset((page - 1) * pagesSize)
+            .all()
+    )
+
+def getVideoCountByComedianId(comedian_id):
+    return (
+        db.session.query(func.count(Video.id))
+            .filter(Video.is_active)
+            .filter_by(comedian_id=comedian_id)
+            .scalar()
+    )
+
+def getAllVideoCount():
+    return db.session.query(db.func.count(Video.id)).scalar()
 

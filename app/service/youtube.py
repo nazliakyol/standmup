@@ -3,7 +3,7 @@ import re
 import os
 from sqlalchemy.exc import IntegrityError
 
-from app.model import comediandb, videodb, db
+from app.model import comediandb, video, db
 from flask import current_app
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -54,7 +54,7 @@ def runYoutubeAuto():
                     else:
                         comedian_id = getComedianId(formatted_name)
 
-            new_video = videodb.Video(
+            new_video = video.Video(
                 comedian_id=comedian_id,
                 title=title,
                 link=link,

@@ -3,10 +3,10 @@ from operator import not_
 from flask import make_response, jsonify, request, render_template
 from flask_caching import CachedResponse
 from sqlalchemy import func
-from app.model.comediandb import Comedian
+from app.model.comedian import Comedian
 from app.model import db
-from app.model.tagdb import Tag
-from app.model.videodb import Video, video_tag
+from app.model.tag import Tag
+from app.model.video import Video, video_tag
 from app.route.website import bp, cache, pagesSize
 
 
