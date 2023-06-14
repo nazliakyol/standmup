@@ -12,7 +12,7 @@ from app.route.website import bp, cache, pagesSize
 # tag page
 @bp.route("/tags/<tag_id>/<tag_name>", methods=["GET"])
 @cache.cached(timeout=5000)
-def handle_tag(tag_id, tag_name):
+def tag(tag_id, tag_name):
     names = (
         db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
             .join(Video)

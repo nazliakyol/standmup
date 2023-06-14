@@ -12,10 +12,10 @@
                     {% for id, name, count in all_names %}
                     <li>
                         {% if title == name %}
-                        <a id="menu-comedian-{{id}}" href="{{ url_for('comedian', comedian_id=id) }}" class="selected">{{ name }}</a>
+                        <a id="menu-comedian-{{id}}" href="{{ url_for('website.comedian', comedian_id=id) }}" class="selected">{{ name }}</a>
                         <!-- {{ count }}-->
                         {% else %}
-                        <a id="menu-comedian-{{id}}" href="{{ url_for('comedian', comedian_id=id) }}">{{ name }}</a>
+                        <a id="menu-comedian-{{id}}" href="{{ url_for('website.comedian', comedian_id=id) }}">{{ name }}</a>
                         {% endif %}
                     </li>
                     {% endfor %}
@@ -31,9 +31,9 @@
                                 <li>
                                     {% set name = tag.name|replace(' ', '-') %}
                                     {% if selected_tag is none or selected_tag.name != tag.name %}
-                                        <a id="menu-tag-{{tag.id}}" href="{{ url_for('tag', tag_id=tag.id, tag_name=name) }}">{{ tag.name }}</a>
+                                        <a id="menu-tag-{{tag.id}}" href="{{ url_for('website.tag', tag_id=tag.id, tag_name=name) }}">{{ tag.name }}</a>
                                     {% else %}
-                                        <a id="menu-tag-{{tag.id}}" href="{{ url_for('tag', tag_id=tag.id, tag_name=name) }}" class="selected">{{ tag.name }}</a>
+                                        <a id="menu-tag-{{tag.id}}" href="{{ url_for('website.tag', tag_id=tag.id, tag_name=name) }}" class="selected">{{ tag.name }}</a>
                                     {% endif %}
                                 </li>
                             {% endif %}

@@ -14,12 +14,12 @@ from app.route.api import bp
 
 
 @bp.route("/api")
-def handle_api():
+def api():
     return render_template("api.html")
 
 # submit form page
 @bp.route('/api/submit', methods=['POST'])
-def handle_submit():
+def submit():
     youtube_link = request.form.get('youtube_link')
     message = request.form.get('message')
     video_link = YoutubeLink(youtube_link=youtube_link, message=message)
@@ -44,16 +44,16 @@ def handle_submit():
 
 # submit fail page
 @bp.route('/api/fail')
-def handle_fail():
+def fail():
     return render_template('fail.html')
 
 # submit success page
 @bp.route('/api/success')
-def handle_success():
+def success():
     return render_template('success.html')
 
 @bp.route("/api/videos", methods=["POST"])
-def handle_addVideo():
+def addVideo():
     #if application.config["ENV"] == 'development':
     #    return handle_addVideo()
     #else:
@@ -79,7 +79,7 @@ def handle_addVideo():
 # made some changes here!! how to use video_id and what is the meaning of this error: "
 # get video by id
 @bp.route("/api/videos/<video_id>", methods=["GET"])
-def handle_getVideo(video_id):
+def getVideo(video_id):
     video = Video.query.get(video_id)
     if video is None:
         return make_response(jsonify({"error": "Video not found"}), 404)
@@ -87,7 +87,7 @@ def handle_getVideo(video_id):
 
 # get all comedian names with count
 @bp.route("/api/comedians", methods=["GET"])
-def handle_getCountByName():
+def getCountByName():
     names = (
         db.session.query(Comedian.name, func.count(Video.id))
             .join(Video)
@@ -103,7 +103,7 @@ def handle_getCountByName():
 
 # get all comedians
 @bp.route("/api/comedians/all", methods=["GET"])
-def handle_allComedians():
+def allComedians():
     comedians = db.session.query(Comedian).all()
     if not comedians:
         return make_response(jsonify({"error": "No comedians found"}), 404)
@@ -113,14 +113,14 @@ def handle_allComedians():
 
 # get videos by comedian
 @bp.route("/api/comedians/<id>/videos", methods=["GET"])
-def handle_getVideoByComedian(id):
+def getVideoByComedian(id):
     comedians = Video.query.filter_by(comedian_id=id).all()
     response = [comedian.to_dict() for comedian in comedians]
     return json.dumps(response)
 
 # get all videos
 @bp.route("/api/videos/all", methods=["GET"])
-def handle_allVideos():
+def allVideos():
     args = request.args
     limit = args.get("limit")
     search = args.get("search")
@@ -139,13 +139,13 @@ def handle_allVideos():
 
 # get random video
 @bp.route("/api/random", methods=["GET"])
-def handle_order_by_random():
+def order_by_random():
     random = Video.query.order_by(func.random()).first()
     return json.dumps(random.to_dict())
 
 # delete video by id
 @bp.route("/api/videos/<video_id>", methods=["DELETE"])
-def handle_delete_video(video_id):
+def delete_video(video_id):
     video = Video.query.get(video_id)
     db.session.delete(video)
     db.session.commit()
@@ -160,7 +160,7 @@ def handle_delete_video(video_id):
 
 # show stat
 @bp.route("/api/stat", methods=["GET"])
-def handle_stat():
+def stat():
     total_video_count = db.session.query(db.func.count(Video.id)).scalar()
     total_comedian_count = db.session.query(db.func.count(Comedian.id)).scalar()
     total_tag_count = db.session.query(db.func.count(Tag.id)).scalar()

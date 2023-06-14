@@ -13,7 +13,7 @@ from app.route.website import bp, cache, pagesSize
 # video page
 @bp.route("/videos/<video_id>", methods=["GET"])
 @cache.cached(timeout=5000)
-def handle_video(video_id):
+def video(video_id):
     names = (
         db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
             .join(Video)

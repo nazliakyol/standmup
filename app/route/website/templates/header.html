@@ -139,7 +139,7 @@
 <header class="py-2 mb-4" id="top-header">
     <div class="container d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
         <div class="dropdown">
-            <a href="{{url_for('home')}}"
+            <a href="{{url_for('website.home')}}"
                class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
                 <img src="{{url_for('static', filename='logo.png')}}" id="logo" alt="logo" style="width:120px; margin-top:10px;">
             </a>
@@ -147,7 +147,7 @@
 
         <div class="d-flex align-items-center">
             <form class="w-100" role="search" method="GET" style="display: flex;"
-                  action="{{ url_for('search', search=search) }}">
+                  action="{{ url_for('website.search', search=search) }}">
                 <input  id="search" name="search" type="text" class="form-control"
                        placeholder="Search..."
                        aria-label="Search">

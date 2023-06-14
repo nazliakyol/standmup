@@ -7,6 +7,7 @@ from app.service.admin import start_admin
 from app.route.api import bp as api_bp
 from app.route.website import bp as website_bp, cache
 
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 application = Flask(__name__, template_folder="templates")
@@ -34,18 +35,19 @@ config = {
     "CACHE_DEFAULT_TIMEOUT": 300
 }
 application.config.from_mapping(config)
-
 print(f'env: {application.config["ENV"]}, dbhost: {application.config["DB_HOST"]}')
 
-
+# db
 db.init_app(application)
 
+# routes
 application.register_blueprint(api_bp)
 application.register_blueprint(website_bp)
 
+# cache
 cache.init_app(application)
 
-#start_scheduler()
+# start_scheduler()
 if application.config["ENV"] == 'development':
     start_admin(application)
 

@@ -12,7 +12,7 @@ from app.route.website import bp, cache, pagesSize
 # search page
 @bp.route("/search", methods=["GET"])
 @cache.cached(timeout=5000)
-def handle_search():
+def search():
     names = (
         db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
             .join(Video)

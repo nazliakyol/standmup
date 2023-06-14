@@ -3,8 +3,6 @@ TODO
 **css**
 * correct the css for fail & success html pages --> osgur
 
-**db**
-
 **mobile**
 * create a Mobil version —> put comedians & tags below the videos
   
@@ -17,7 +15,7 @@ TODO
 * add some stat to admin panel home page
    
 **refactoring**
-* refactoring --> remove template & static modules from model directory --> route.api is not working (circular import)
+* remove db queries under py files to another place
 
 **github**
 * delete unnecessary branches

@@ -10,7 +10,7 @@ from app.model import db
 # comedian page
 @bp.route("/comedians/<comedian_id>", methods=["GET"])
 @cache.cached(timeout=5000)
-def handle_comedian(comedian_id):
+def comedian(comedian_id):
     names = (
         db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
             .join(Video)

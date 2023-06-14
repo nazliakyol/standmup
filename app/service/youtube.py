@@ -4,7 +4,7 @@ import os
 from sqlalchemy.exc import IntegrityError
 
 from app.model import comediandb, videodb, db
-from application import application
+from flask import current_app
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -23,11 +23,11 @@ def getComedianId(name):
     return id
 
 def runYoutubeAuto():
-    with application.app_context():
+    with current_app.app_context():
         class YouTube:
             nameRegex = re.compile(".+?(?=--|-|\/|\|)")
-            apiKey = application.config["YOUTUBE_API_KEY"]
-            playlistId = application.config["YOUTUBE_PLAYLIST"]
+            apiKey = current_app.config["YOUTUBE_API_KEY"]
+            playlistId = current_app.config["YOUTUBE_PLAYLIST"]
             url = f"https://www.googleapis.com/youtube/v3/playlistItems?key={apiKey}&part=snippet&playlistId={playlistId}"
             response = requests.get(url)
             data = response.json()

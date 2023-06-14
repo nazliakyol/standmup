@@ -13,7 +13,7 @@ from app.route.website import bp, cache, pagesSize
 # home page
 @bp.route("/", methods=["GET"])
 @cache.cached(timeout=5000)
-def handle_home():
+def home():
     names = (
         db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
             .join(Video)
@@ -88,7 +88,7 @@ def handle_home():
 
 
     return CachedResponse(
-        response=make_response(render_template('./templates/index.html', all_videos=videos,
+        response=make_response(render_template('index.html', all_videos=videos,
         title = title,
         selected_tag=selected_tag,
         all_names=names,

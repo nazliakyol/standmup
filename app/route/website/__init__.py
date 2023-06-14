@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_caching import Cache
 
-bp = Blueprint('website', __name__)
+bp = Blueprint('website', __name__, template_folder='templates')
 cache = Cache()
 pagesSize = 10
 

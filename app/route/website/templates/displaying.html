@@ -9,14 +9,14 @@
                         allowfullscreen></iframe>
             </div>
             <h4 class="video-title"><a
-                    href="{{ url_for('video', video_id=video.id) }}" style="text-decoration: none" >{{ video.title }}</a> by <a
-                    href="{{ url_for('comedian', comedian_id=video.comedian_id) }}" style="text-decoration: none" >{{ video.comedian.name }}</a></h4>
+                    href="{{ url_for('website.video', video_id=video.id) }}" style="text-decoration: none" >{{ video.title }}</a> by <a
+                    href="{{ url_for('website.comedian', comedian_id=video.comedian_id) }}" style="text-decoration: none" >{{ video.comedian.name }}</a></h4>
             <p class="video-description;">{{ video.description }}</p>
             <div class="tag-list">
 
                 {% for tag in video.getTags()%}
                 {% set name = tag.name|replace(' ', '-') %}
-                <a style="text-decoration: none" href="{{url_for('tag', tag_id = tag.id, tag_name = name)}}" >{{ tag.name }}</a>
+                <a style="text-decoration: none" href="{{url_for('website.tag', tag_id = tag.id, tag_name = name)}}" >{{ tag.name }}</a>
                 &nbsp
 
                 {% endfor %}

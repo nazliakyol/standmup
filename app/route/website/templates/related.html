@@ -31,16 +31,17 @@
         <div class="video-details" style="text-align: center;">
 
             <h4 class="video-title" style=" margin:10px 0; text-decoration: none;"><a
-                    href="{{ url_for('video', video_id=other_video.id) }}" style="text-decoration: none">{{
+                    href="{{ url_for('website.video', video_id=other_video.id) }}" style="text-decoration: none">{{
                 other_video.title }}</a> by
                 <a
-                        href="{{ url_for('comedian', comedian_id=other_video.comedian_id) }}"
+                        href="{{ url_for('website.comedian', comedian_id=other_video.comedian_id) }}"
                         style="text-decoration: none">{{
                     other_video.comedian.name }}</a></h4>
             <p class="video-description;" style="margin 0px;">{{ other_video.description }}</p>
             <div class="tag-list" style="margin-right: 5px;">
                 {% for tag in other_video.getTags() %}
-                <a style="text-decoration: none" href="/tags/{{ tag.id }}">#{{ tag.name }}</a>
+                {% set name = tag.name|replace(' ', '-') %}
+                <a style="text-decoration: none" href="/tags/{{ tag.id }}/{{ name }}">#{{ tag.name }}</a>
                 &nbsp;
                 {% endfor %}
             </div>
