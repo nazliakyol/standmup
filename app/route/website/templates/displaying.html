@@ -15,7 +15,8 @@
             <div class="tag-list">
 
                 {% for tag in video.getTags()%}
-                {% set name = tag.name|replace(' ', '-') %}
+                {% set name = tag.to_url() %}
+
                 <a style="text-decoration: none" href="{{url_for('website.tag', tag_id = tag.id, tag_name = name)}}" >{{ tag.name }}</a>
                 &nbsp
 

@@ -13,3 +13,9 @@ class Tag(db.Model):
 
     def to_dict(self):
         return {"id": self.id, "name": self.name, "is_visible": self.is_visible}
+
+    def to_url(self):
+        if ' ' in self.name:
+            return self.name.replace(' ', '-')
+        else:
+            return self.name

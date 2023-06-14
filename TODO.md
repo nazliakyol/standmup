@@ -18,9 +18,7 @@ TODO
 * remove db queries under py files to another place
 
 **github**
-* delete unnecessary branches
 * change github status to public
-
 
 
 long-term TODO:

@@ -49,7 +49,6 @@ def video(video_id):
     )
 
     video_tags = video.getTags()
-    video_title = db.session.query(Video.title).filter_by(id= video_id).first()
     if video is None:
         return make_response(jsonify({"error": "Video not found"}), 404)
 
@@ -90,7 +89,6 @@ def video(video_id):
         has_more=has_more,
         video=video,
         comedian_videos=comedian_videos,
-        video_title=video_title,
         video_tags=video_tags,
         all_tags=all_tags)), timeout=5000
     )

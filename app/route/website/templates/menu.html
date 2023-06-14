@@ -29,11 +29,10 @@
                         {% for tag_name, count in tag_counts %}
                             {% if tag.name == tag_name and count >= 5 %}
                                 <li>
-                                    {% set name = tag.name|replace(' ', '-') %}
                                     {% if selected_tag is none or selected_tag.name != tag.name %}
-                                        <a id="menu-tag-{{tag.id}}" href="{{ url_for('website.tag', tag_id=tag.id, tag_name=name) }}">{{ tag.name }}</a>
+                                        <a id="menu-tag-{{tag.id}}" href="{{ url_for('website.tag', tag_id=tag.id, tag_name=tag.to_url()) }}">{{ tag.name }}</a>
                                     {% else %}
-                                        <a id="menu-tag-{{tag.id}}" href="{{ url_for('website.tag', tag_id=tag.id, tag_name=name) }}" class="selected">{{ tag.name }}</a>
+                                        <a id="menu-tag-{{tag.id}}" href="{{ url_for('website.tag', tag_id=tag.id, tag_name=tag.to_url()) }}" class="selected">{{ tag.name }}</a>
                                     {% endif %}
                                 </li>
                             {% endif %}

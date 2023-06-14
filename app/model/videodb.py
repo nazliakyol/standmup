@@ -34,7 +34,7 @@ class Video(db.Model):
         self.tags = []
 
     def getTags(self):
-        tags = db.session.query(tagdb.Tag.name, tagdb.Tag.id).join(video_tag).join(Video).filter(
+        tags = db.session.query(tagdb.Tag).join(video_tag).join(Video).filter(
             video_tag.c.video_id == self.id).order_by(tagdb.Tag.name.asc()).limit(6).all()
         return tags
 
@@ -51,5 +51,4 @@ class Video(db.Model):
             "is_ready": self.is_ready
 
         }
-
 
