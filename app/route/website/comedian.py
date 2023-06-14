@@ -1,13 +1,11 @@
 from flask import make_response, jsonify, request, render_template
 from flask_caching import CachedResponse
-from sqlalchemy import func
-from app.model.comedian import Comedian, getComedianNames, getComedianById
-from app.model.tag import Tag, getTags, getTagsWithCounts
-from app.model.video import Video, video_tag, getVideosByComedianId, getVideoCountByComedianId
+from app.model.comedian_query import getComedianNames, getComedianById
+from app.model.video_query import getVideosByComedianId, getVideoCountByComedianId
+from app.model.tag_query import getTags, getTagsWithCounts
 from app.route.website import bp, cache, pagesSize
-from app.model import db
 
-# comedian page
+
 @bp.route("/comedians/<comedian_id>", methods=["GET"])
 @cache.cached(timeout=5000)
 def comedian(comedian_id):

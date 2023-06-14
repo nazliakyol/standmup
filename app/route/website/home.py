@@ -2,12 +2,9 @@ from operator import or_
 
 from flask import make_response, jsonify, request, render_template
 from flask_caching import CachedResponse
-from sqlalchemy import func, desc
-
-from app.model.comedian import Comedian, getComedianNames
-from app.model import db
-from app.model.tag import Tag, getTags, getTagsWithCounts
-from app.model.video import Video, video_tag, getAllVideoCount, searchVideos, getVideos
+from app.model.comedian_query import getComedianNames
+from app.model.tag_query import getTags, getTagsWithCounts
+from app.model.video_query import getAllVideoCount, searchVideos, getVideos
 from app.route.website import bp, cache, pagesSize
 
 # home page
