@@ -1,15 +1,11 @@
 from operator import not_
 
-from flask import make_response, jsonify, request, render_template
+from flask import make_response, jsonify, render_template
 from flask_caching import CachedResponse
-from sqlalchemy import func
-from app.model.comedian import Comedian
-from app.model import db
 from app.model.comedian_query import getComedianNames
-from app.model.tag import Tag
-from app.model.video import Video, video_tag
-from app.model.video_query import getVideos, getVideoById, getOtherVideos, getVideosByComedianId
-from app.route.website import bp, cache, pagesSize
+from app.model.video import Video
+from app.model.video_query import getVideoById, getOtherVideos, getVideosByComedianId
+from app.route.website import bp, cache
 from app.model.tag_query import getTagsWithCounts, getTags
 
 # video page

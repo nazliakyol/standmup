@@ -1,7 +1,7 @@
 from flask import request, render_template
 from app.model.comedian_query import getComedianNames
 from app.model.video_query import searchVideos, getSearchVideoCount
-from app.route.website import bp, cache, pagesSize
+from app.route.website import bp, pagesSize
 from app.model.tag_query import getTags, getTagsWithCounts
 
 
