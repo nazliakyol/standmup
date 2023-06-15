@@ -1,16 +1,14 @@
 import unittest
 
-from flask import json
+from flask import json, Flask
 
 from app.model import video, db
 from app.route.api.api import addVideo
-
 
 class TestAddVideo(unittest.TestCase):
     def test_addVideo(self):
         return
 
-        # Create a mock request.json payload
         content = {
             "comedian_id": 1,
             "title": "Test Video",
