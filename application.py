@@ -10,20 +10,20 @@ from app.route.website import bp as website_bp, cache
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-application = Flask(__name__, template_folder="templates")
+app = Flask(__name__, template_folder="templates")
 
 # config
 
-application.config.from_prefixed_env()
-debug = application.config["ENV"] == 'development'
+app.config.from_prefixed_env()
+debug = app.config["ENV"] == 'development'
 
 # connect to db
-application.config[
+app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = f"mysql+pymysql://{application.config['DB_USER']}:{application.config['DB_PASS']}@{application.config['DB_HOST']}/standapi"
-application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+] = f"mysql+pymysql://{app.config['DB_USER']}:{app.config['DB_PASS']}@{app.config['DB_HOST']}/standapi"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 if debug:
-    application.config["SQLALCHEMY_ECHO"] = True
+    app.config["SQLALCHEMY_ECHO"] = True
 
 cacheType = "SimpleCache"
 if debug:
@@ -33,22 +33,22 @@ config = {
     "CACHE_TYPE": cacheType,
     "CACHE_DEFAULT_TIMEOUT": 300
 }
-application.config.from_mapping(config)
-print(f'env: {application.config["ENV"]}, dbhost: {application.config["DB_HOST"]}')
+app.config.from_mapping(config)
+print(f'env: {app.config["ENV"]}, dbhost: {app.config["DB_HOST"]}')
 
 # db
-db.init_app(application)
+db.init_app(app)
 
 # routes
-application.register_blueprint(api_bp)
-application.register_blueprint(website_bp)
+app.register_blueprint(api_bp)
+app.register_blueprint(website_bp)
 
 # cache
-cache.init_app(application)
+cache.init_app(app)
 
 # start_scheduler()
-if application.config["ENV"] == 'development':
-    start_admin(application)
+if app.config["ENV"] == 'development':
+    start_admin(app)
 
 if __name__ == "__main__":
-    application.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000)
