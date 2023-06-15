@@ -16,15 +16,13 @@ def tag(tag_id, tag_name):
         page = int(args.get("page"))
 
     names = getComedianNames()
-
-
-    videos = getTagVideos()
+    videos = getTagVideos(tag_id, page, pagesSize)
 
     tag = getTagById(tag_id)
     if tag is None:
         return make_response(jsonify({"error": "Tag not found"}), 404)
 
-    tag_counts = getTagsWithCounts(countMoreThan=5)
+    tag_counts = getTagsWithCounts(5)
 
     all_tags = getTags()
 

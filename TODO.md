@@ -7,15 +7,14 @@ TODO
 * create a Mobil version —> put comedians & tags below the videos
   
 **testing**
-* keep the addVieo test for now --> is it working (module not found error for app module)----> NOT TESTED!
-* add testing (if everything's ok --> merge master) --> osgur
+* complete testing (if everything's ok --> merge master) --> osgur
   
 **admin panel**
 * change tag id's with tag names in admin panel
 * add some stat to admin panel home page
    
 **refactoring**
-* remove db queries under py files to another place
+* cache
 
 **github**
 * change github status to public

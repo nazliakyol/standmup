@@ -22,7 +22,7 @@ def comedian(comedian_id):
 
     names = getComedianNames()
     all_tags = getTags()
-    tag_counts = getTagsWithCounts()
+    tag_counts = getTagsWithCounts(5)
 
     has_more = True
     if len(videos) < pagesSize:

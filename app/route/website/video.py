@@ -30,7 +30,7 @@ def video(video_id):
     comedian_videos = getVideosByComedianId(Video.comedian_id, page=1, pagesSize=10)
 
     all_tags = getTags()
-    tag_counts = getTagsWithCounts(countMoreThan=5)
+    tag_counts = getTagsWithCounts(0)
 
     title = video.title + " by " + video.comedian.name
 

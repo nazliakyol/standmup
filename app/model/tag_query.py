@@ -9,7 +9,7 @@ def getTagById(tag_id):
 def getTags():
     return db.session.query(Tag).order_by(Tag.name.asc()).all()
 
-def getTagsWithCounts(countMoreThan=5):
+def getTagsWithCounts(countMoreThan):
     return (
         db.session.query(
             Tag.name,
@@ -25,7 +25,7 @@ def getTagsWithCounts(countMoreThan=5):
         .all()
     )
 
-def getTagVideos():
+def getTagVideos(tag_id, page, pagesSize):
     return (
     db.session.query(Video).
     filter(Video.is_active).

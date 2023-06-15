@@ -24,7 +24,7 @@ def search():
     title = search
     all_tags = getTags()
     selected_tag = None
-    tag_counts = getTagsWithCounts()
+    tag_counts = getTagsWithCounts(5)
 
     if search:
         videos = searchVideos(search, page, pagesSize)

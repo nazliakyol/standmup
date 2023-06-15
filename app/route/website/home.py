@@ -31,7 +31,7 @@ def home():
 
     names = getComedianNames()
     all_tags = getTags()
-    tag_counts = getTagsWithCounts()
+    tag_counts = getTagsWithCounts(0)
     video_count = getAllVideoCount()
 
     total_pages = int(video_count / pagesSize) + 1
