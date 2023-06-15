@@ -7,7 +7,6 @@ from app.model.tag_query import getTags, getTagsWithCounts
 
 # search page
 @bp.route("/search", methods=["GET"])
-@cache.cached(timeout=5000)
 def search():
     args = request.args
 
