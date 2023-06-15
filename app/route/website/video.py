@@ -1,6 +1,4 @@
-from operator import not_
-
-from flask import make_response, jsonify, render_template
+from flask import make_response, jsonify, render_template, request
 from flask_caching import CachedResponse
 from app.model.comedian_query import getComedianNames
 from app.model.video import Video
@@ -12,6 +10,13 @@ from app.model.tag_query import getTagsWithCounts, getTags
 @bp.route("/videos/<video_id>", methods=["GET"])
 @cache.cached(timeout=5000)
 def video(video_id):
+    args = request.args
+
+    page = 1
+    if args.get("page") is not None:
+        page = int(args.get("page"))
+
+    search = args.get("search")
 
     names = getComedianNames()
 
@@ -23,7 +28,7 @@ def video(video_id):
 
     video_tags = video.getTags()
 
-    comedian_videos = getVideosByComedianId(Video.comedian_id, page=1, pagesSize=10)
+    comedian_videos = getVideosByComedianId(Video.comedian_id, page, pagesSize=10)
 
     all_tags = getTags()
     tag_counts = getTagsWithCounts(0)
@@ -44,6 +49,7 @@ def video(video_id):
         all_videos=[video],
         other_videos=other_videos,
         all_names=names,
+        search=search,
         video=video,
         comedian_videos=comedian_videos,
         video_tags=video_tags,

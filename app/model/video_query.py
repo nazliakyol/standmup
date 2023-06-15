@@ -23,8 +23,7 @@ def getVideos(page, pagesSize=10):
             db.session.query(Video)
                 .filter((Video.is_active))
                 .order_by(desc(Video.creation_date))
-                .limit(pagesSize)
-                .offset((page - 1) * pagesSize)
+                .limit(pagesSize).offset((page - 1) * pagesSize)
                 .all()
         )
 

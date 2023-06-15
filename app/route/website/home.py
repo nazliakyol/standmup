@@ -18,9 +18,9 @@ def home():
 
     videos = []
     if search:
-        videos = searchVideos(search, page, pagesSize)
+        videos = searchVideos(search, page, pagesSize=10)
     else:
-        videos = getVideos(page, pagesSize)
+        videos = getVideos(page, pagesSize=10)
 
     if videos is None:
         return make_response(jsonify({"error": "Video not found"}), 404)
@@ -40,7 +40,8 @@ def home():
 
 
     return CachedResponse(
-        response=make_response(render_template('index.html', all_videos=videos,
+        response=make_response(render_template('index.html',
+        all_videos=videos,
         title = title,
         selected_tag=selected_tag,
         all_names=names,
