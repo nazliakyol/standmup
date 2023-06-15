@@ -1,80 +1,34 @@
-from operator import or_
-
-from flask import make_response, jsonify, request, render_template
-from sqlalchemy import func, desc
-
-from app.model.comedian import Comedian
-from app.model import db
-from app.model.tag import Tag
-from app.model.video import Video, video_tag
+from flask import request, render_template
+from app.model.comedian_query import getComedianNames
+from app.model.video_query import searchVideos, getSearchVideoCount
 from app.route.website import bp, cache, pagesSize
+from app.model.tag_query import getTags, getTagsWithCounts
+
 
 # search page
 @bp.route("/search", methods=["GET"])
 @cache.cached(timeout=5000)
 def search():
-    names = (
-        db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
-            .join(Video)
-            .group_by(Comedian.id)
-            .order_by(Comedian.name.asc())
-            .all()
-    )
-
-    if not names:
-        return make_response(jsonify({"error": "No comedians found"}), 404)
-
     args = request.args
 
     page = 1
     if args.get("page") is not None:
         page = int(args.get("page"))
-
     search = args.get("search")
-    title = search
-    all_tags = db.session.query(Tag).order_by(Tag.name.asc()).all()
-    selected_tag = None
-    tag_counts = (
-        db.session.query(
-            Tag.name,
-            func.count(Video.id)
-        ).join(
-            video_tag,
-            Tag.id == video_tag.c.tag_id
-        ).join(
-            Video,
-            Video.id == video_tag.c.video_id
-        ).group_by(Tag.name).all()
-    )
+
     video_count = 0
     videos = []
+
+    names = getComedianNames()
+
+    title = search
+    all_tags = getTags()
+    selected_tag = None
+    tag_counts = getTagsWithCounts()
+
     if search:
-        videos = (
-            db.session.query(Video).filter(Video.is_active).outerjoin(video_tag).outerjoin(Tag).filter(
-                or_(
-                    or_(
-                        Video.title.ilike(f"%{search}%"),
-                        Video.description.ilike(f"%{search}%"),
-                    ),
-                    Tag.name.ilike(f"%{search}%")
-                )
-
-            ).order_by(desc(Video.creation_date))
-                .limit(pagesSize)
-                .offset((page - 1) * pagesSize)
-                .all()
-        )
-
-        video_count = db.session.query(db.func.count(Video.id)).filter(Video.is_active).outerjoin(
-            video_tag).outerjoin(Tag).filter(
-            or_(
-                or_(
-                    Video.title.ilike(f"%{search}%"),
-                    Video.description.ilike(f"%{search}%"),
-                ),
-                Tag.name.ilike(f"%{search}%")
-            )).scalar()
-
+        videos = searchVideos(search, page, pagesSize)
+        video_count = getSearchVideoCount(search)
 
     if video_count == 0:
         print("Video not found.")
@@ -88,7 +42,6 @@ def search():
                                )
 
     has_more = True
-
     if len(videos) < pagesSize:
         has_more = False
 
@@ -107,5 +60,6 @@ def search():
         tag_counts=tag_counts,
         total_pages=total_pages)
 
-def handle_search_fail():
+
+def search_fail():
     return render_template('search_fail.html')

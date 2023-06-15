@@ -1,65 +1,38 @@
 from flask import make_response, request, render_template, jsonify
 from flask_caching import CachedResponse
-from sqlalchemy import func
-
-from app.model.comedian import Comedian
-from app.model import db
-from app.model.tag import Tag
-from app.model.video import Video, video_tag
+from app.model.comedian_query import getComedianNames
+from app.model.tag_query import getTagVideos, getTagById, getTagsWithCounts, getTags
 from app.route.website import bp, cache, pagesSize
-
+from app.model.video_query import getVideoCountByTagId
 
 # tag page
 @bp.route("/tags/<tag_id>/<tag_name>", methods=["GET"])
 @cache.cached(timeout=5000)
 def tag(tag_id, tag_name):
-    names = (
-        db.session.query(Comedian.id, Comedian.name, func.count(Video.id))
-            .join(Video)
-            .group_by(Comedian.id)
-            .order_by(Comedian.name.asc())
-            .all()
-    )
-
     args = request.args
-    page = 1
 
+    page = 1
     if args.get("page") is not None:
         page = int(args.get("page"))
 
-    videos = db.session.query(Video).filter(Video.is_active).join(
-        video_tag, Video.id == video_tag.c.video_id
-    ).join(
-        Tag, Tag.id == video_tag.c.tag_id
-    ).filter(
-        Tag.id == tag_id,
-    ).limit(pagesSize).offset((page - 1) * pagesSize).all()
+    names = getComedianNames()
 
-    tag = db.session.query(Tag).filter_by(id= tag_id).first()
-    tag_counts = (
-        db.session.query(
-            Tag.name,
-            func.count(Video.id)
-        ).join(
-            video_tag,
-            Tag.id == video_tag.c.tag_id
-        ).join(
-            Video,
-            Video.id == video_tag.c.video_id
-        ).group_by(Tag.name).all()
-    )
+
+    videos = getTagVideos()
+
+    tag = getTagById(tag_id)
     if tag is None:
         return make_response(jsonify({"error": "Tag not found"}), 404)
 
-    all_tags = db.session.query(Tag).order_by(Tag.name.asc()).all()
+    tag_counts = getTagsWithCounts(countMoreThan=5)
+
+    all_tags = getTags()
 
     has_more = True
-
     if len(videos) < pagesSize:
         has_more = False
 
-    video_count = (db.session.query(func.count(Video.id)).filter(Video.is_active).join(video_tag).filter_by(
-        tag_id=tag_id).scalar())
+    video_count = getVideoCountByTagId(tag_id)
 
     total_pages = int(video_count / pagesSize) +1
     title = tag.name

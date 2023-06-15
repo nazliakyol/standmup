@@ -1,5 +1,3 @@
-from operator import or_
-
 from flask import make_response, jsonify, request, render_template
 from flask_caching import CachedResponse
 from app.model.comedian_query import getComedianNames
@@ -26,6 +24,7 @@ def home():
 
     if videos is None:
         return make_response(jsonify({"error": "Video not found"}), 404)
+
     has_more = True
     if len(videos) < pagesSize:
         has_more = False
