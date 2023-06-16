@@ -35,7 +35,7 @@ def home():
     video_count = getAllVideoCount()
 
     total_pages = int(video_count / pagesSize) + 1
-    title = 'f*ck other ways to happy'
+    title = 'f*ck other ways to =]'
     selected_tag = None
 
 

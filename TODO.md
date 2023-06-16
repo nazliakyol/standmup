@@ -1,26 +1,15 @@
 TODO
 
-**css**
-* correct the css for fail & success html pages --> osgur
-
 **mobile**
 * create a Mobil version —> put comedians & tags below the videos
-  
-**testing**
-* complete testing (if everything's ok --> merge master) --> osgur
-  
+
 **admin panel**
 * change tag id's with tag names in admin panel
 * add some stat to admin panel home page
    
 **refactoring**
-* cache
-* env 
-#if application.config["ENV"] == 'development':
-    #    return handle_delete_video()
-    #else:
-    #    return make_response(jsonify({"error": "Not authorized."}), 401)
-
+* cache --> add Gunicorn
+* env -->  add development for deleting and adding videos 
 
 **github**
 * change github status to public

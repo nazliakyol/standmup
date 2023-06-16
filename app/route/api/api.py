@@ -144,6 +144,10 @@ def order_by_random():
 
 # delete video by id
 @bp.route("/api/videos/<video_id>", methods=["DELETE"])
+#if application.config["ENV"] == 'development':
+    #    return handle_delete_video()
+    #else:
+    #    return make_response(jsonify({"error": "Not authorized."}), 401)
 def delete_video(video_id):
     video = Video.query.get(video_id)
     db.session.delete(video)
