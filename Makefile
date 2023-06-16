@@ -10,6 +10,7 @@ docker-run:
 			-e FLASK_DB_USER=$(FLASK_DB_USER) \
 			-e FLASK_YOUTUBE_API_KEY=$(FLASK_YOUTUBE_API_KEY) \
 			-e FLASK_YOUTUBE_PLAYLIST=$(FLASK_YOUTUBE_PLAYLIST) \
+			-e FLASK_ENV=$(FLASK_ENV) \
 			standmup
 
 install-requirements:
