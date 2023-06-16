@@ -34,10 +34,10 @@ def submit():
             if "youtube" in youtube_link:
                 db.session.add(video_link)
                 db.session.commit()
-                return redirect(url_for('success'))
+                return redirect(url_for('api.success'))
             else:
                 print("Invalid YouTube link provided.")
-                return redirect(url_for('fail'))
+                return redirect(url_for('api.fail'))
         else:
             print("YouTube link not provided.")
             return redirect(url_for('fail'))
@@ -55,7 +55,7 @@ def success():
 @bp.route("/api/videos", methods=["POST"])
 def addVideo():
     #if application.config["ENV"] == 'development':
-    #    return handle_addVideo()
+    #    return addVideo()
     #else:
     #    return make_response(jsonify({"error": "Not authorized."}), 401)
 
@@ -76,7 +76,6 @@ def addVideo():
     return json.dumps(new_video.to_dict())
 
 
-# made some changes here!! how to use video_id and what is the meaning of this error: "
 # get video by id
 @bp.route("/api/videos/<video_id>", methods=["GET"])
 def getVideo(video_id):
@@ -150,11 +149,6 @@ def delete_video(video_id):
     db.session.delete(video)
     db.session.commit()
     return json.dumps(video.to_dict())
-
-    #if application.config["ENV"] == 'development':
-    #    return handle_delete_video()
-    #else:
-    #    return make_response(jsonify({"error": "Not authorized."}), 401)
 
 
 

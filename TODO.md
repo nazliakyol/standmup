@@ -15,9 +15,16 @@ TODO
    
 **refactoring**
 * cache
+* env 
+#if application.config["ENV"] == 'development':
+    #    return handle_delete_video()
+    #else:
+    #    return make_response(jsonify({"error": "Not authorized."}), 401)
+
 
 **github**
 * change github status to public
+
 
 
 long-term TODO:
@@ -41,5 +48,6 @@ tags that has not been used:
 94 engagement
 288 european
 289 russia
+
 
 
