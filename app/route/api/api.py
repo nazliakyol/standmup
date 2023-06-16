@@ -40,7 +40,7 @@ def submit():
                 return redirect(url_for('api.fail'))
         else:
             print("YouTube link not provided.")
-            return redirect(url_for('fail'))
+            return redirect(url_for('api.fail'))
 
 # submit fail page
 @bp.route('/api/fail')
