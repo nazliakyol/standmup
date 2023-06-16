@@ -1,5 +1,5 @@
 </div>
-<div class="video-grid" style="display: flex; flex-wrap: wrap;
+<div class="video-grid row" style="display: flex; flex-wrap: wrap;
         justify-content: space-between;  margin-bottom: -100px;">
     {% set count = 0 %}
     {% for other_video in other_videos %}
@@ -13,16 +13,9 @@
     {% endfor %}
 
     {% if common_tags %}
-    <div class="video" style="margin-bottom: 100px; width: 280px; ">
-        <div class="player-container" style="position: relative;
-        width: 100%;
-        height: 0;
-        padding-bottom: 56.25%;">
-            <iframe width="175" height="100" class="player" style=" position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;"
+    <div class="video col-6" >
+        <div class="player-container" style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%;">
+            <iframe width="175" height="100" class="player" style=" position: absolute; width: 100%; height: 100%; top: 0; left: 0;"
                     src="https://www.youtube.com/embed/{{ other_video.link }}"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
