@@ -13,6 +13,8 @@ def getComedianNames():
             .all()
     )
 
+def getComedians():
+    return db.session.query(Comedian).order_by(Comedian.name.asc()).all()
 
 def getComedianById(comedian_id):
     return db.session.query(Comedian).filter_by(id=comedian_id).first()
