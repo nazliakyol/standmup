@@ -1,5 +1,5 @@
 import json
-from flask import make_response, jsonify, request, render_template, redirect, url_for
+from flask import make_response, jsonify, request, render_template, redirect, url_for, current_app
 from sqlalchemy import func
 
 from app.model.comedian import Comedian
@@ -54,10 +54,8 @@ def success():
 
 @bp.route("/api/videos", methods=["POST"])
 def addVideo():
-    #if application.config["ENV"] == 'development':
-    #    return addVideo()
-    #else:
-    #    return make_response(jsonify({"error": "Not authorized."}), 401)
+    if not current_app.config['DEBUG']:
+        return make_response(jsonify({"error": "Not authorized."}), 401)
 
     content = request.json
 
@@ -144,11 +142,10 @@ def order_by_random():
 
 # delete video by id
 @bp.route("/api/videos/<video_id>", methods=["DELETE"])
-#if application.config["ENV"] == 'development':
-    #    return handle_delete_video()
-    #else:
-    #    return make_response(jsonify({"error": "Not authorized."}), 401)
 def delete_video(video_id):
+    if not current_app.config['DEBUG']:
+        return make_response(jsonify({"error": "Not authorized."}), 401)
+
     video = Video.query.get(video_id)
     db.session.delete(video)
     db.session.commit()
