@@ -1,0 +1,5 @@
+.git
+.venv
+backup
+.tmp
+.vscode
