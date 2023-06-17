@@ -3,12 +3,13 @@
 <div class="bg-body-tertiary">
     <div class="grid" rel="videos">
         <div class="mobile row" >
-            <h4 style="margin: 20px;">Tags</h4>
+            <h4>Tags</h4>
             <br>
             {% for tag in all_tags %}
                 {% set name = tag.name %}
-                <p class="col-4"><a style="text-decoration: none; margin: 20px;"
-                                             href="{{ url_for('website.tag', tag_id=tag.id, tag_name=tag.name) }}">#{{ name }}</a>
+                <p class="col-4">
+                    <a style="text-decoration: none;"
+                       href="{{ url_for('website.tag', tag_id=tag.id, tag_name=tag.name) }}">#{{ name }}</a>
                 </p>
             {% endfor %}
 

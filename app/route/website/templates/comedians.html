@@ -3,13 +3,13 @@
 <div class="bg-body-tertiary">
     <div class="grid" rel="videos">
         <div class="mobile row" >
-            <h4 style="margin: 20px;">Comedians</h4>
+            <h4>Comedians</h4>
             {% for comedian in all_comedians %}
             {% set name = comedian.name %}
             <p  class="col-3" >
-                <a style="text-decoration: none; margin: 20px;"
-                                         href="{{ url_for('website.comedian', comedian_id=comedian.id) }}">{{ name }}</a>
-            </p>
+                <a style="text-decoration: none"
+                   href="{{ url_for('website.comedian', comedian_id=comedian.id) }}">{{ name }}</a>
+            </p >
 
             {% endfor %}
 

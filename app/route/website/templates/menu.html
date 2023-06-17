@@ -1,5 +1,8 @@
 <div class="container pb-3">
-
+    <div id="top-menu">
+        <a href="{{ url_for('website.comedians') }}">All Comedians</a> |
+        <a href="{{ url_for('website.tags') }}">All Tags</a>
+    </div>
 
     <div class="d-grid gap-3" id="video-display" style="grid-template-columns: 1fr 3fr; ">
         <div style="display: flex; flex-direction: column; ">
