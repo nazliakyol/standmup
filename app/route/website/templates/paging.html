@@ -1,7 +1,7 @@
 <div class="paging" style="text-align:center">
 
     {% if page > 1 %}
-    <a href="{{ text }}&page={{page-1}}" class="btn btn-link" style=" text-decoration: none; font-weight: bold">Previous</a>
+    <a href="{{ text }}page={{page-1}}" class="btn btn-link" style=" text-decoration: none; font-weight: bold">Previous</a>
     {% endif %}
 
     &nbsp;
@@ -40,7 +40,7 @@
     &nbsp;
 
     {% if has_more %}
-    <a href="{{ text }}&page={{page+1}}" class="btn btn-link" style=" text-decoration: none; font-weight: bold">Next</a>
+    <a href="{{ text }}page={{page+1}}" class="btn btn-link" style=" text-decoration: none; font-weight: bold">Next</a>
     {% endif %}
 
 

@@ -1,18 +1,21 @@
-from flask import request, render_template
+from flask import request, render_template, make_response
+from flask_caching import CachedResponse
 from app.model.comedian_query import getComedianNames
 from app.model.video_query import searchVideos, getSearchVideoCount
-from app.route.website import bp, pagesSize
+from app.route.website import bp, pagesSize, cache
 from app.model.tag_query import getTags, getTagsWithCounts
 
 
 # search page
 @bp.route("/search", methods=["GET"])
+@cache.cached(timeout=5000, query_string=True)
 def search():
     args = request.args
 
     page = 1
     if args.get("page") is not None:
         page = int(args.get("page"))
+
     search = args.get("search")
 
     video_count = 0
@@ -28,6 +31,8 @@ def search():
     if search:
         videos = searchVideos(search, page, pagesSize)
         video_count = getSearchVideoCount(search)
+
+    total_pages = int(video_count / pagesSize) + 1
 
     if video_count == 0:
         print("Video not found.")
@@ -45,9 +50,8 @@ def search():
         has_more = False
 
 
-    total_pages = int(video_count / pagesSize) + 1
-
-    return render_template('search.html',
+    return CachedResponse(
+        response=make_response(render_template('search.html',
         all_videos=videos,
         title = title,
         selected_tag=selected_tag,
@@ -57,8 +61,14 @@ def search():
         has_more=has_more,
         all_tags=all_tags,
         tag_counts=tag_counts,
-        total_pages=total_pages)
+        total_pages=total_pages)),
+        timeout=5000)
 
 
+# search fail page
+@bp.route("/search", methods=["GET"])
+@cache.cached(timeout=5000, query_string=True)
 def search_fail():
-    return render_template('search_fail.html')
+    return CachedResponse(
+        response=make_response(render_template('search_fail.html')),
+        timeout=5000)
