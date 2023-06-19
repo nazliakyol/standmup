@@ -7,7 +7,7 @@ from app.model.video_query import getVideoCountByTagId
 
 # tag page
 @bp.route("/tags/<tag_id>/<tag_name>", methods=["GET"])
-@cache.cached(timeout=5000)
+@cache.cached(timeout=5000, query_string=True)
 def tag(tag_id, tag_name):
     args = request.args
 

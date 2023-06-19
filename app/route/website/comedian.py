@@ -7,7 +7,7 @@ from app.route.website import bp, cache, pagesSize
 
 
 @bp.route("/comedians/<comedian_id>", methods=["GET"])
-@cache.cached(timeout=5000)
+@cache.cached(timeout=5000, query_string=True)
 def comedian(comedian_id):
     args = request.args
     page = 1
