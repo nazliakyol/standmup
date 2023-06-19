@@ -8,6 +8,6 @@ def start_scheduler():
     global scheduler
     scheduler = BackgroundScheduler()
 
-    scheduler.add_job(addVideoAuto, 'interval', hours=12, id='my_new_video')
+    scheduler.add_job(addVideoAuto, 'interval', hours=1, id='my_new_video')
     scheduler.add_job(runYoutubeAuto, 'interval', hours=1, id='my_new_link')
     scheduler.start()
