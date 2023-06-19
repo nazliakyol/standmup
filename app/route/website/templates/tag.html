@@ -9,7 +9,7 @@
         <br>
         {% include "displaying.html" %}
         {% endblock %}
-        {% set text = "/tags/" + tag.id|string + "/" + tag.to_url()  %}
+        {% set text = "/tags/" + tag.id|string + "/" + tag.to_url() + "?"  %}
         {% include "paging.html" %}
 
     </div>

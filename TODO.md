@@ -1,15 +1,8 @@
 TODO
 
-**mobile**
-* create a Mobil version —> put comedians & tags below the videos
-
 **admin panel**
 * change tag id's with tag names in admin panel
 * add some stat to admin panel home page
-   
-**refactoring**
-* cache --> add Gunicorn
-* env -->  add development for deleting and adding videos 
 
 **github**
 * change github status to public

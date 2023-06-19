@@ -3,7 +3,6 @@ import os
 from flask import Flask
 from app.model import db
 from app.service.admin import start_admin
-#from app.service.scheduler import start_scheduler
 from app.route.api import bp as api_bp
 from app.route.website import bp as website_bp, cache
 
@@ -13,7 +12,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__, template_folder="templates")
 
 # config
-
 app.config.from_prefixed_env()
 debug = app.config["ENV"] == 'development'
 
