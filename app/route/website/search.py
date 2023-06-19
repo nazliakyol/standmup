@@ -49,6 +49,7 @@ def search():
     if len(videos) < pagesSize:
         has_more = False
 
+    base_link = "/search?search=" + search
 
     return CachedResponse(
         response=make_response(render_template('search.html',
@@ -61,6 +62,7 @@ def search():
         has_more=has_more,
         all_tags=all_tags,
         tag_counts=tag_counts,
+        base_link=base_link,
         total_pages=total_pages)),
         timeout=5000)
 

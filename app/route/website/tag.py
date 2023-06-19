@@ -36,6 +36,7 @@ def tag(tag_id, tag_name):
     title = tag.name
     selected_tag = tag
     selected_comedian = None
+    base_link = "/tags/" + str(tag.id) + "/" + tag.to_url() + "?"
 
     return CachedResponse(
         response=make_response(render_template(
@@ -50,5 +51,6 @@ def tag(tag_id, tag_name):
         has_more=has_more,
         all_tags=all_tags,
         all_names=names,
+        base_link=base_link,
         total_pages=total_pages)),timeout=5000
     )

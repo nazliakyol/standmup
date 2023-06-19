@@ -37,7 +37,7 @@ def home():
     total_pages = int(video_count / pagesSize) + 1
     title = 'light a MUP'
     selected_tag = None
-
+    base_link = "/?"
 
     return CachedResponse(
         response=make_response(render_template('index.html',
@@ -50,6 +50,7 @@ def home():
         has_more=has_more,
         all_tags=all_tags,
         tag_counts=tag_counts,
+        base_link=base_link,
         total_pages=total_pages)),
         timeout=5000
     )

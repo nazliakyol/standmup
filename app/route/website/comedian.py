@@ -32,6 +32,7 @@ def comedian(comedian_id):
     selected_name = None
     selected_tag = None
     selected_comedian = comedian.name
+    base_link = "/comedians/" + str(comedian.id) + "?"
 
     return CachedResponse(
         response=make_response(render_template(
@@ -49,6 +50,7 @@ def comedian(comedian_id):
         comedian_name=comedian.name,
         total_pages=total_pages,
         comedian_description=comedian.description,
+        base_link=base_link,
         all_tags=all_tags)), timeout=5000
     )
 
