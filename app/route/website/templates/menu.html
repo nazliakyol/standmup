@@ -25,7 +25,7 @@
 
                     {% endif %}
                     {% endfor %}
-                    <li style="margin-top:8px; font-weight: bold"><a href="{{ url_for('website.comedians')}}">All Comedians ></a></li>
+                    <li style="margin-top:8px; font-weight: bold"><a href="{{ url_for('website.comedians')}}">All ></a></li>
                 </ul>
 
 
@@ -36,7 +36,7 @@
 
                    {% for tag in all_tags %}
                         {% for tag_name, count in tag_counts %}
-                            {% if tag.name == tag_name and count >= 12 %}
+                            {% if tag.name == tag_name and count >= 10 %}
                                 <li>
                                     {% if selected_tag is none or selected_tag.name != tag.name %}
                                         <a id="menu-tag-{{tag.id}}" href="{{ url_for('website.tag', tag_id=tag.id, tag_name=tag.to_url()) }}">{{ tag.name }}</a>
@@ -47,7 +47,7 @@
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
-                    <li style="margin-top:8px; font-weight: bold"><a href="{{ url_for('website.tags')}}">All Tags ></a></li>
+                    <li style="margin-top:8px; font-weight: bold"><a href="{{ url_for('website.tags')}}">All ></a></li>
 
                 </ul>
                 {% endblock %}
