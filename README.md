@@ -1,14 +1,9 @@
-**StandMup Backend**
+# StandMup
 
-Stand up videos contented webpage backend for practicing Python&Flask. 
+Curated short stand up videos: http://standmup.com
 
-Ingredients:
-- Rest API
-- Service:
-   - videos 
-   - tags 
-- Docker
-- AWS
+## API Docs
+See https://standmup.com/api
 
 
 
