@@ -8,29 +8,35 @@
         <div style="display: flex; flex-direction: column; ">
             <aside class="bg-body-tertiary" id="left-menu">
                 {% block content %}
-                <label for="select-comedian" style=" top: 0; padding-bottom: 10px;">Select Comedian</label>
-                <ul style="list-style-type: none; overflow-y: scroll; max-height: 300px; position: relative; "
+                <label for="select-comedian" style=" top: 0; padding-bottom: 10px; font-weight: bold">Select Comedian</label>
+                <ul style="list-style-type: none; position: relative; "
                     id="select-comedian">
 
                     {% for id, name, count in all_names %}
+                    {% if count >= 2 %}
                     <li>
-                        {% if title == name %}
-                        <a id="menu-comedian-{{id}}" href="{{ url_for('website.comedian', comedian_id=id) }}" class="selected">{{ name }}</a>
-                        <!-- {{ count }}-->
-                        {% else %}
-                        <a id="menu-comedian-{{id}}" href="{{ url_for('website.comedian', comedian_id=id) }}">{{ name }}</a>
-                        {% endif %}
+                            {% if title == name %}
+                            <a id="menu-comedian-{{id}}" href="{{ url_for('website.comedian', comedian_id=id) }}" class="selected">{{ name }}</a>
+                            <!-- {{ count }}-->
+                            {% else %}
+                            <a id="menu-comedian-{{id}}" style="" href="{{ url_for('website.comedian', comedian_id=id) }}">{{ name }}</a>
+                            {% endif %}
                     </li>
+
+                    {% endif %}
                     {% endfor %}
+                    <li style="margin-top:8px; font-weight: bold"><a href="{{ url_for('website.comedians')}}">All Comedians ></a></li>
                 </ul>
+
+
                 {% endblock %}
                 {% block tag %}
-                <label for="select-tag" style=" top: 0; padding-bottom: 10px; padding-top: 40px;">Select Tag</label>
-                <ul class="active" id="select-tag" style="list-style-type: none; overflow-y: scroll; max-height: 300px; position: relative;">
+                <label for="select-tag" style=" top: 0; padding-bottom: 10px; padding-top: 40px; font-weight: bold">Select Tag</label>
+                <ul class="active" id="select-tag" style="list-style-type: none; position: relative;">
 
                    {% for tag in all_tags %}
                         {% for tag_name, count in tag_counts %}
-                            {% if tag.name == tag_name and count >= 5 %}
+                            {% if tag.name == tag_name and count >= 12 %}
                                 <li>
                                     {% if selected_tag is none or selected_tag.name != tag.name %}
                                         <a id="menu-tag-{{tag.id}}" href="{{ url_for('website.tag', tag_id=tag.id, tag_name=tag.to_url()) }}">{{ tag.name }}</a>
@@ -41,7 +47,7 @@
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
-
+                    <li style="margin-top:8px; font-weight: bold"><a href="{{ url_for('website.tags')}}">All Tags ></a></li>
 
                 </ul>
                 {% endblock %}
