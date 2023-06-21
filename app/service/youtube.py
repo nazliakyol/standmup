@@ -3,20 +3,23 @@ import re
 import os
 from sqlalchemy.exc import IntegrityError
 
-from app.model import comediandb, video, db
 from flask import current_app
+
+from app.model import db
+from app.model.comedian import Comedian
+from app.model.video import Video
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 def isMatch(name):
-    comedian_names = [comediandb.Comedian.name for comediandb.Comedian in comediandb.Comedian.query.all()]
+    comedian_names = [Comedian.name for Comedian in Comedian.query.all()]
     for comedian_name in comedian_names:
         if comedian_name == name:
             return True
 
 
 def getComedianId(name):
-    new_comedian = comediandb.Comedian(name=name, description="needed to fill")
+    new_comedian = Comedian(name=name, description="needed to fill")
     db.session.add(new_comedian)
     db.session.commit()
     id = new_comedian.id
@@ -49,12 +52,12 @@ def runYoutubeAuto():
 
                     comedian_id = 0
                     if isMatch(formatted_name):
-                        comedian = comediandb.Comedian.query.filter_by(name=formatted_name).first()
+                        comedian = Comedian.query.filter_by(name=formatted_name).first()
                         comedian_id = comedian.id
                     else:
                         comedian_id = getComedianId(formatted_name)
 
-            new_video = video.Video(
+            new_video = Video(
                 comedian_id=comedian_id,
                 title=title,
                 link=link,

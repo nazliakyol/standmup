@@ -1,11 +1,10 @@
 import os
-
 from flask import Flask
 from app.model import db
 from app.service.admin import start_admin
 from app.route.api import bp as api_bp
 from app.route.website import bp as website_bp, cache
-
+from app.service.scheduler import start_scheduler
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -44,7 +43,9 @@ app.register_blueprint(website_bp)
 # cache
 cache.init_app(app)
 
-# start_scheduler()
+# scheduler
+start_scheduler()
+
 if app.config["ENV"] == 'development':
     start_admin(app)
 
