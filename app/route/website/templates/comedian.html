@@ -7,11 +7,25 @@
         <h4 class="video-title">{{ comedian_name }}</h4>
         &nbsp;
         <p>{{ comedian_description }} </p>
-        <br>
-        {% include "displaying.html" %}
-        {% endblock %}
-        {% include "paging.html" %}
+        &nbsp;
+        {% for product in comedian_products %}
+        <div>
+            <img src="{{ product.image_link }}" alt="My Image">
+            <a href="{{ product.product_link }}">{{ product.title }}</a>
+        </div>
+
+        {% endfor %}
+
     </div>
+    <br>
+
+    {% include "displaying.html" %}
+    {% endblock %}
+    {% set text = "/comedians/" + comedian.id|string +"?" %}
+    {% include "paging.html" %}
+
+
+</div>
 </div>
 </div>
 </div>
@@ -25,6 +39,7 @@ if(comMenuItem){
     let top = comMenuItem.getBoundingClientRect().top - comMenu.getBoundingClientRect().top
     comMenu.scrollTo({top: top})
 }
+
 
 </script>
 

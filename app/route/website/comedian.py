@@ -1,6 +1,9 @@
 from flask import make_response, jsonify, request, render_template
 from flask_caching import CachedResponse
+
+from app.model.comedian import Comedian
 from app.model.comedian_query import getComedianNames, getComedianById
+from app.model.product_query import getProductsByComedianId, getProducts
 from app.model.video_query import getVideosByComedianId, getVideoCountByComedianId
 from app.model.tag_query import getTags, getTagsWithCounts
 from app.route.website import bp, cache, pagesSize
@@ -32,7 +35,15 @@ def comedian(comedian_id):
     selected_name = None
     selected_tag = None
     selected_comedian = comedian.name
-    base_link = "/comedians/" + str(comedian.id) + "?"
+
+    all_products = getProducts()
+    if all_products is None:
+        return make_response(jsonify({"error": "No product found"}), 404)
+
+    for product in all_products:
+        product_id = product.id
+
+    comedian_products = getProductsByComedianId(product_id)
 
     return CachedResponse(
         response=make_response(render_template(
@@ -50,7 +61,8 @@ def comedian(comedian_id):
         comedian_name=comedian.name,
         total_pages=total_pages,
         comedian_description=comedian.description,
-        base_link=base_link,
+        product_id=product_id,
+        comedian_products=comedian_products,
         all_tags=all_tags)), timeout=5000
     )
 
