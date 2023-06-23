@@ -40,10 +40,7 @@ def comedian(comedian_id):
     if all_products is None:
         return make_response(jsonify({"error": "No product found"}), 404)
 
-    for product in all_products:
-        product_id = product.id
-
-    comedian_products = getProductsByComedianId(product_id)
+    comedian_products = getProductsByComedianId(comedian_id)
 
     return CachedResponse(
         response=make_response(render_template(
@@ -61,7 +58,6 @@ def comedian(comedian_id):
         comedian_name=comedian.name,
         total_pages=total_pages,
         comedian_description=comedian.description,
-        product_id=product_id,
         comedian_products=comedian_products,
         all_tags=all_tags)), timeout=5000
     )
