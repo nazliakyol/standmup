@@ -2,6 +2,7 @@
 from sqlalchemy import func, desc, or_, not_, distinct
 
 from app.model import db
+from app.model.comedian import Comedian
 from app.model.tag import Tag
 from app.model.video import Video, video_tag
 
@@ -57,13 +58,15 @@ def searchVideos(search, page, pagesSize=10):
         db.session.query(Video).distinct()
             .filter((Video.is_active))
             .outerjoin(video_tag)
-            .outerjoin(Tag).filter(
+            .outerjoin(Tag)
+            .outerjoin(Comedian).filter(
                 or_(
                     or_(
                         Video.title.ilike(f"%{search}%"),
                         Video.description.ilike(f"%{search}%"),
                     ),
-                    Tag.name.ilike(f"%{search}%")
+                    Tag.name.ilike(f"%{search}%"),
+                    Comedian.name.ilike(f"%{search}%"),
                 )
             ).order_by(desc(Video.creation_date))
             .limit(pagesSize)
@@ -76,13 +79,15 @@ def getSearchVideoCount(search):
         db.session.query(db.func.count(distinct(Video.id)))
             .filter(Video.is_active)
             .outerjoin(video_tag)
-            .outerjoin(Tag).filter(
+            .outerjoin(Tag)
+            .outerjoin(Comedian).filter(
                 or_(
                     or_(
                         Video.title.ilike(f"%{search}%"),
                         Video.description.ilike(f"%{search}%"),
                     ),
-                    Tag.name.ilike(f"%{search}%")
-            )).scalar()
+                    Tag.name.ilike(f"%{search}%"),
+                    Comedian.name.ilike(f"%{search}%"),
+    )).scalar()
     )
 

@@ -29,10 +29,9 @@ def search():
     tag_counts = getTagsWithCounts(5)
 
     if search:
-        videos = searchVideos(search, page, pagesSize)
+        videos = searchVideos(search, page, pagesSize =10)
         video_count = getSearchVideoCount(search)
-
-    total_pages = int(video_count / pagesSize) + 1
+        total_pages = int(video_count / pagesSize) + 1
 
     if video_count == 0:
         print("Video not found.")
