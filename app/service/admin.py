@@ -5,6 +5,7 @@ from wtforms import SelectMultipleField
 from wtforms.widgets import ListWidget, CheckboxInput
 from app.model import tag, video, comedian, youtubeLink, db
 from flask_admin import BaseView, expose
+import os.path
 
 
 
@@ -25,34 +26,23 @@ class VideoModelView(ModelView):
         model.tags = tag.Tag.query.filter(tag.Tag.id.in_(form.tags.data)).all()
 
 
-class MyHomeView(AdminIndexView):
+class AdminHome(AdminIndexView):
     @expose('/')
     def index(self):
+        # TODO move stats calculations to model folder
         response = requests.get('http://localhost:5000/api/stat')
         result = response.json()
-        return self.render('admin/index.html', result=result)
+        return self.render('admin/home.html', result=result)
 
     default_view = 'index'
-
 
 
 admin = None
 
 def start_admin(app):
     global admin
-    admin = Admin(app, index_view=MyHomeView())
+    admin = Admin(app, index_view=AdminHome())
     admin.add_view(VideoModelView(video.Video, db.session))
     admin.add_view(ModelView(comedian.Comedian, db.session))
     admin.add_view(ModelView(tag.Tag, db.session))
     admin.add_view(ModelView(youtubeLink.YoutubeLink, db.session))
-
-
-
-#class CustomAdminIndexView(AdminIndexView):
-#    def __init__(self, *args, **kwargs):
-#        super(AdminIndexView, self).__init__(*args, **kwargs)
-#
-#    def render(self, template, **kwargs):
-#        response = requests.get('http://localhost:5000/api/stat')
-#        result = response.json()
-#        return super(CustomAdminIndexView, self).render_template(template, result=result, **kwargs)
