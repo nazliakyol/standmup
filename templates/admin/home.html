@@ -1,0 +1,20 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Stats</h1>
+        <ul>
+            <li>Total Video Count: {{ result['total video count'] }}</li>
+            <li>Total Comedian Count: {{ result['total comedian count'] }}</li>
+            <li>Total Tag Count: {{ result['total tag count'] }}</li>
+        </ul>
+
+        <h2>Video Count by Comedian:</h2>
+        <ul>
+            {% for comedian in result['video count by comedian'] %}
+                <li>{{ comedian['name'] }} (ID: {{ comedian['id'] }}) - {{ comedian['video count'] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

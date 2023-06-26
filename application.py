@@ -1,10 +1,15 @@
 import os
+
 from flask import Flask
+from flask_admin import Admin, AdminIndexView
+
 from app.model import db
-from app.service.admin import start_admin
 from app.route.api import bp as api_bp
 from app.route.website import bp as website_bp, cache
-from app.service.scheduler import start_scheduler
+from flask_admin import BaseView, expose
+import requests
+
+from app.service.admin import start_admin
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -43,11 +48,10 @@ app.register_blueprint(website_bp)
 # cache
 cache.init_app(app)
 
-# scheduler
-start_scheduler()
-
 if app.config["ENV"] == 'development':
     start_admin(app)
+#else:
+#    start_scheduler()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
