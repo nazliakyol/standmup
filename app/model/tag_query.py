@@ -36,3 +36,7 @@ def getTagVideos(tag_id, page, pagesSize):
     ).filter(
         Tag.id == tag_id,
     ).limit(pagesSize).offset((page - 1) * pagesSize).all())
+
+
+def getAllTagCount():
+    return db.session.query(db.func.count(Tag.id)).scalar()

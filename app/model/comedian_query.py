@@ -1,6 +1,5 @@
 from sqlalchemy import func
 from app.model import db
-
 from app.model.comedian import Comedian
 from app.model.video import Video
 
@@ -18,3 +17,6 @@ def getComedians():
 
 def getComedianById(comedian_id):
     return db.session.query(Comedian).filter_by(id=comedian_id).first()
+
+def getAllComedianCount():
+    return db.session.query(db.func.count(Comedian.id)).scalar()

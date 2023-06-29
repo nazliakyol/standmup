@@ -1,6 +1,4 @@
-
 from sqlalchemy import func, desc, or_, not_, distinct
-
 from app.model import db
 from app.model.comedian import Comedian
 from app.model.tag import Tag
@@ -91,3 +89,5 @@ def getSearchVideoCount(search):
     )).scalar()
     )
 
+def getRandomVideo():
+    return Video.query.order_by(func.random()).first()

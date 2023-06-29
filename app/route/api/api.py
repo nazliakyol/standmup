@@ -1,15 +1,15 @@
 import json
 from flask import make_response, jsonify, request, render_template, redirect, url_for, current_app
-from sqlalchemy import func
-
-from app.model.comedian import Comedian
-from app.model.tag import Tag
+from app.model.comedian_query import getComedianNames, getComedians, getComedianById, getAllComedianCount
+from app.model.tag_query import getAllTagCount
 from app.model.video import Video
+from app.model.video_query import getVideoById, getRandomVideo, getAllVideoCount
 
 from app.model.youtubeLink import YoutubeLink
 from app.model import db
 
 # api page
+from app.model.youtubeLink_query import getCountByYoutubeLinkId
 from app.route.api import bp
 
 
@@ -24,7 +24,8 @@ def submit():
     message = request.form.get('message')
     video_link = YoutubeLink(youtube_link=youtube_link, message=message)
 
-    count = db.session.query(func.count(YoutubeLink.id)).scalar()
+    count = getCountByYoutubeLinkId()
+
     if count > 100:
         print("Server is overload.")
         return redirect(url_for('fail'))
@@ -77,20 +78,16 @@ def addVideo():
 # get video by id
 @bp.route("/api/videos/<video_id>", methods=["GET"])
 def getVideo(video_id):
-    video = Video.query.get(video_id)
+    video = getVideoById(video_id)
     if video is None:
         return make_response(jsonify({"error": "Video not found"}), 404)
     return json.dumps(video.to_dict())
 
+
 # get all comedian names with count
 @bp.route("/api/comedians", methods=["GET"])
 def getCountByName():
-    names = (
-        db.session.query(Comedian.name, func.count(Video.id))
-            .join(Video)
-            .group_by(Comedian.id)
-            .all()
-    )
+    names = getComedianNames()
     if not names:
         return make_response(jsonify({"error": "No comedians found"}), 404)
     namesToDict = dict((x, y) for x, y in names)
@@ -101,7 +98,7 @@ def getCountByName():
 # get all comedians
 @bp.route("/api/comedians/all", methods=["GET"])
 def allComedians():
-    comedians = db.session.query(Comedian).all()
+    comedians = getComedians()
     if not comedians:
         return make_response(jsonify({"error": "No comedians found"}), 404)
     response = [comedian.to_dict() for comedian in comedians]
@@ -111,9 +108,10 @@ def allComedians():
 # get videos by comedian
 @bp.route("/api/comedians/<id>/videos", methods=["GET"])
 def getVideoByComedian(id):
-    comedians = Video.query.filter_by(comedian_id=id).all()
+    comedians = getComedianById(comedian_id=id)
     response = [comedian.to_dict() for comedian in comedians]
     return json.dumps(response)
+
 
 # get all videos
 @bp.route("/api/videos/all", methods=["GET"])
@@ -137,7 +135,7 @@ def allVideos():
 # get random video
 @bp.route("/api/random", methods=["GET"])
 def order_by_random():
-    random = Video.query.order_by(func.random()).first()
+    random = getRandomVideo()
     return json.dumps(random.to_dict())
 
 # delete video by id
@@ -146,7 +144,7 @@ def delete_video(video_id):
     if not current_app.config['DEBUG']:
         return make_response(jsonify({"error": "Not authorized."}), 401)
 
-    video = Video.query.get(video_id)
+    video = getVideoById(video_id)
     db.session.delete(video)
     db.session.commit()
     return json.dumps(video.to_dict())
@@ -156,16 +154,10 @@ def delete_video(video_id):
 # show stat
 @bp.route("/api/stat", methods=["GET"])
 def stat():
-    total_video_count = db.session.query(db.func.count(Video.id)).scalar()
-    total_comedian_count = db.session.query(db.func.count(Comedian.id)).scalar()
-    total_tag_count = db.session.query(db.func.count(Tag.id)).scalar()
-    names = (
-        db.session.query(Comedian.id,Comedian.name, func.count(Video.id))
-            .join(Video)
-            .group_by(Comedian.id)
-            .order_by(Comedian.name.asc())
-            .all()
-    )
+    total_video_count = getAllVideoCount()
+    total_comedian_count = getAllComedianCount()
+    total_tag_count = getAllTagCount()
+    names = getComedianNames()
     result = {
         "total video count": total_video_count,
         "total comedian count": total_comedian_count,
