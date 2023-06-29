@@ -1,28 +1,47 @@
-
-        {% for video in all_videos %}
-        <div class="video" style="margin-bottom: 100px;">
-            <div class="player-container" >
-                <iframe width="560" height="315" class="player"
-                        src="https://www.youtube.com/embed/{{video.link}}"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-            </div>
-            <h4 class="video-title"><a
-                    href="{{ url_for('website.video', video_id=video.id) }}" style="text-decoration: none" >{{ video.title }}</a> by <a
-                    href="{{ url_for('website.comedian', comedian_id=video.comedian_id) }}" style="text-decoration: none" >{{ video.comedian.name }}</a></h4>
-            <p class="video-description;">{{ video.description }}</p>
-            <div class="tag-list">
-
-                {% for tag in video.getTags()%}
-                {% set name = tag.to_url() %}
-
-                <a style="text-decoration: none" href="{{url_for('website.tag', tag_id = tag.id, tag_name = name)}}" >{{ tag.name }}</a>
-                &nbsp
-
-                {% endfor %}
-            </div>
-
-
+{% for video in all_videos %}
+<div class="video" style="margin-bottom: 100px;">
+    <div class="player-container">
+        <iframe width="560" height="315" class="player"
+                src="https://www.youtube.com/embed/{{video.link}}"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+    </div>
+    <div style="display: flex; align-items: center;">
+        <h4 class="video-title">
+            <a href="{{ url_for('website.video', video_id=video.id) }}" style="text-decoration: none">{{
+                video.title }}</a> by <a
+                href="{{ url_for('website.comedian', comedian_id=video.comedian_id) }}" style="text-decoration: none">{{
+            video.comedian.name }}</a></h4>
+        <div  class="like-unlike" style="margin-left:auto;">
+            <a  href="#" onclick="incrementLike('{{ video.id }}')"> <img class="like"
+                    src="{{url_for('static', filename='icons8-like-32.png')}}" id="like" alt="like"></a>
+            <a href="#" onclick="incrementUnlike('{{ video.id }}')"> <img class="unlike"
+                    src="{{url_for('static', filename='icons8-unlike-32.png')}}" id="unlike"></a>
         </div>
+    </div>
+
+
+    <p class="video-description;">{{ video.description }}</p>
+    <div class="tag-list">
+
+        {% for tag in video.getTags()%}
+        {% set name = tag.to_url() %}
+
+        <a style="text-decoration: none" href="{{url_for('website.tag', tag_id = tag.id, tag_name = name)}}">{{ tag.name
+            }}</a>
+        &nbsp
+
         {% endfor %}
+
+    </div>
+    <div  class="small-like-unlike">
+            <a  href="#" onclick="incrementLike('{{ video.id }}')"> <img class="like"
+                    src="{{url_for('static', filename='icons8-like-16.png')}}" id="small-like" alt="like"></a>
+            <a href="#" onclick="incrementUnlike('{{ video.id }}')"> <img class="unlike"
+                    src="{{url_for('static', filename='icons8-unlike-16.png')}}" id="small-unlike"></a>
+        </div>
+
+
+</div>
+{% endfor %}
