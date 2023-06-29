@@ -35,11 +35,13 @@
         {% endfor %}
 
     </div>
-    <div  class="small-like-unlike">
+    <div  class="small-like-unlike" style="display: flex;">
+    <div style="margin-left:auto;">
             <a  href="#" onclick="incrementLike('{{ video.id }}')"> <img class="like"
                     src="{{url_for('static', filename='icons8-like-32.png')}}" id="small-like" alt="like"></a>
             <a href="#" onclick="incrementUnlike('{{ video.id }}')"> <img class="unlike"
                     src="{{url_for('static', filename='icons8-unlike-32.png')}}" id="small-unlike"></a>
+        </div>
         </div>
 
 
