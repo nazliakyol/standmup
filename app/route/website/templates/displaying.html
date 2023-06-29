@@ -15,10 +15,10 @@
             video.comedian.name }}</a></h4>
         <div class="like-unlike" style="margin-left:auto;">
             <a href="#" onclick="incrementLike('{{ video.id }}')"> <img class="like"
-                                                                        src="{{url_for('static', filename='icons8-like-32.png')}}"
+                                                                        src="{{url_for('static', filename='like.png')}}"
                                                                         id="like" alt="like"></a>
             <a href="#" onclick="incrementUnlike('{{ video.id }}')"> <img class="unlike"
-                                                                          src="{{url_for('static', filename='icons8-unlike-32.png')}}"
+                                                                          src="{{url_for('static', filename='unlike.png')}}"
                                                                           id="unlike"></a>
         </div>
     </div>
@@ -41,10 +41,10 @@
         <div style="display: flex;">
             <div style="margin-left:auto;">
                 <a href="#" onclick="incrementLike('{{ video.id }}')"> <img class="like"
-                                                                            src="{{url_for('static', filename='icons8-like-32.png')}}"
+                                                                            src="{{url_for('static', filename='like.png')}}"
                                                                             id="small-like" alt="like"></a>
                 <a href="#" onclick="incrementUnlike('{{ video.id }}')"> <img class="unlike"
-                                                                              src="{{url_for('static', filename='icons8-unlike-32.png')}}"
+                                                                              src="{{url_for('static', filename='unlike.png')}}"
                                                                               id="small-unlike"></a>
             </div>
         </div>
