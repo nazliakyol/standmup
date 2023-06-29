@@ -1,16 +1,9 @@
 import os
-
-from flask import Flask
-from flask_admin import Admin, AdminIndexView
-
+from flask import Flask, current_app
 from app.model import db
 from app.route.api import bp as api_bp
 from app.route.website import bp as website_bp, cache
-from flask_admin import BaseView, expose
-import requests
-
 from app.service.admin import start_admin
-
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__, template_folder="templates")
@@ -31,7 +24,7 @@ cacheType = "SimpleCache"
 if debug:
     cacheType = "NullCache"
 config = {
-    "DEBUG": debug,          # some Flask specific configs
+    "DEBUG": debug,
     "CACHE_TYPE": cacheType,
     "CACHE_DEFAULT_TIMEOUT": 300
 }
