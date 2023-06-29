@@ -18,16 +18,21 @@ class Video(db.Model):
     description = db.Column(db.Text, nullable=True)
     is_active = db.Column(db.Boolean, default=True)
     is_ready = db.Column(db.Boolean, default=True)
+    like_count = db.Column(db.Integer, nullable=True)
+    unlike_count = db.Column(db.Integer, nullable=True)
     tags = db.relationship('Tag', secondary=video_tag, backref='tagged')
 
 
-    def __init__(self, comedian_id, title, link, description, is_active, is_ready):
+    def __init__(self, comedian_id, title, link, description, is_active, is_ready, like_count, unlike_count):
         self.comedian_id = comedian_id
         self.title = title
         self.link = link
         self.description = description
         self.is_active = is_active
         self.is_ready = is_ready
+        self.like_count = like_count
+        self.unlike_count = unlike_count
+
 
         self.tags = []
 
@@ -46,6 +51,7 @@ class Video(db.Model):
             "comedian_name": self.comedian.name,
             "description": self.description,
             "is_active": self.is_active,
-            "is_ready": self.is_ready
-
+            "is_ready": self.is_ready,
+            "like_count": self.like_count,
+            "unlike_count": self.unlike_count,
         }

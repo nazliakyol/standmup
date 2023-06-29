@@ -1,13 +1,9 @@
 import os
-
 from flask import Flask
-from flask_admin import Admin, AdminIndexView
-
 from app.model import db
 from app.route.api import bp as api_bp
 from app.route.website import bp as website_bp, cache
-from flask_admin import BaseView, expose
-import requests
+
 
 from app.service.admin import start_admin
 

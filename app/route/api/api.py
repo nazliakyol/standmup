@@ -3,7 +3,7 @@ from flask import make_response, jsonify, request, render_template, redirect, ur
 from app.model.comedian_query import getComedianNames, getComedians, getComedianById, getAllComedianCount
 from app.model.tag_query import getAllTagCount
 from app.model.video import Video
-from app.model.video_query import getVideoById, getRandomVideo, getAllVideoCount
+from app.model.video_query import getVideoById, getRandomVideo, getAllVideoCount, getVideoLikeCount, getVideoUnlikeCount
 
 from app.model.youtubeLink import YoutubeLink
 from app.model import db
@@ -167,3 +167,36 @@ def stat():
 
     return jsonify(result)
 
+# like video
+@bp.route('/api/like/videos/<video_id>', methods=['POST'])
+def like_video(video_id):
+
+    video = getVideoById(video_id)
+
+    if video:
+        updated_like_count = video.like_count + 1
+        video.like_count = updated_like_count
+        db.session.commit()
+
+    result = {
+        "like_count": video.like_count
+    }
+    return jsonify(result)
+
+
+# unlike video
+@bp.route('/api/unlike/videos/<video_id>', methods=['POST'])
+def unlike_video(video_id):
+
+    video = getVideoById(video_id)
+
+    if video:
+        updated_unlike_count = video.unlike_count + 1
+        video.unlike_count = updated_unlike_count
+        db.session.commit()
+
+
+    result = {
+        "unlike_count": video.unlike_count
+    }
+    return jsonify(result)

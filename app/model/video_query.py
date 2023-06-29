@@ -91,3 +91,9 @@ def getSearchVideoCount(search):
 
 def getRandomVideo():
     return Video.query.order_by(func.random()).first()
+
+def getVideoLikeCount():
+    return db.session.query(db.func.count(Video.like_count)).scalar()
+
+def getVideoUnlikeCount():
+    return db.session.query(db.func.count(Video.unlike_count)).scalar()
