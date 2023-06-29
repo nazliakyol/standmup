@@ -168,35 +168,36 @@ def stat():
     return jsonify(result)
 
 # like video
-@bp.route('/api/like/videos/<video_id>', methods=['POST'])
+@bp.route('/api/videos/<video_id>/like', methods=['POST'])
 def like_video(video_id):
 
     video = getVideoById(video_id)
+    result = None
 
     if video:
-        updated_like_count = video.like_count + 1
-        video.like_count = updated_like_count
+        like_count = video.like_count + 1
+        video.like_count = like_count
         db.session.commit()
 
-    result = {
-        "like_count": video.like_count
-    }
-    return jsonify(result)
+        result = {
+            "like_count": like_count
+        }
+    return jsonify(result) if result else jsonify({"message": "Video not found"})
 
 
 # unlike video
-@bp.route('/api/unlike/videos/<video_id>', methods=['POST'])
+@bp.route('/api/videos/<video_id>/unlike', methods=['POST'])
 def unlike_video(video_id):
 
     video = getVideoById(video_id)
+    result = None
 
     if video:
-        updated_unlike_count = video.unlike_count + 1
-        video.unlike_count = updated_unlike_count
+        unlike_count = video.unlike_count + 1
+        video.unlike_count = unlike_count
         db.session.commit()
 
-
-    result = {
-        "unlike_count": video.unlike_count
-    }
-    return jsonify(result)
+        result = {
+            "unlike_count": unlike_count
+        }
+    return jsonify(result) if result else jsonify({"message": "Video not found"})
