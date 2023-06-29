@@ -13,11 +13,13 @@
                 video.title }}</a> by <a
                 href="{{ url_for('website.comedian', comedian_id=video.comedian_id) }}" style="text-decoration: none">{{
             video.comedian.name }}</a></h4>
-        <div  class="like-unlike" style="margin-left:auto;">
-            <a  href="#" onclick="incrementLike('{{ video.id }}')"> <img class="like"
-                    src="{{url_for('static', filename='icons8-like-32.png')}}" id="like" alt="like"></a>
+        <div class="like-unlike" style="margin-left:auto;">
+            <a href="#" onclick="incrementLike('{{ video.id }}')"> <img class="like"
+                                                                        src="{{url_for('static', filename='icons8-like-32.png')}}"
+                                                                        id="like" alt="like"></a>
             <a href="#" onclick="incrementUnlike('{{ video.id }}')"> <img class="unlike"
-                    src="{{url_for('static', filename='icons8-unlike-32.png')}}" id="unlike"></a>
+                                                                          src="{{url_for('static', filename='icons8-unlike-32.png')}}"
+                                                                          id="unlike"></a>
         </div>
     </div>
 
@@ -35,14 +37,18 @@
         {% endfor %}
 
     </div>
-    <div  class="small-like-unlike" style="display: flex;">
-    <div style="margin-left:auto;">
-            <a  href="#" onclick="incrementLike('{{ video.id }}')"> <img class="like"
-                    src="{{url_for('static', filename='icons8-like-32.png')}}" id="small-like" alt="like"></a>
-            <a href="#" onclick="incrementUnlike('{{ video.id }}')"> <img class="unlike"
-                    src="{{url_for('static', filename='icons8-unlike-32.png')}}" id="small-unlike"></a>
+    <div class="small-like-unlike">
+        <div style="display: flex;">
+            <div style="margin-left:auto;">
+                <a href="#" onclick="incrementLike('{{ video.id }}')"> <img class="like"
+                                                                            src="{{url_for('static', filename='icons8-like-32.png')}}"
+                                                                            id="small-like" alt="like"></a>
+                <a href="#" onclick="incrementUnlike('{{ video.id }}')"> <img class="unlike"
+                                                                              src="{{url_for('static', filename='icons8-unlike-32.png')}}"
+                                                                              id="small-unlike"></a>
+            </div>
         </div>
-        </div>
+    </div>
 
 
 </div>
