@@ -13,7 +13,7 @@
                     id="select-comedian">
 
                     {% for id, name, count in all_names %}
-                    {% if count >= 2 %}
+                    {% if count > 2 %}
                     <li>
                             {% if title == name %}
                             <a id="menu-comedian-{{id}}" href="{{ url_for('website.comedian', comedian_id=id) }}" class="selected">{{ name }}</a>
@@ -36,7 +36,7 @@
 
                    {% for tag in all_tags %}
                         {% for tag_name, count in tag_counts %}
-                            {% if tag.name == tag_name and count >= 10 %}
+                            {% if tag.name == tag_name and count >= 12 %}
                                 <li>
                                     {% if selected_tag is none or selected_tag.name != tag.name %}
                                         <a id="menu-tag-{{tag.id}}" href="{{ url_for('website.tag', tag_id=tag.id, tag_name=tag.to_url()) }}">{{ tag.name }}</a>
