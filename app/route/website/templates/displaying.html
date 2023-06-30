@@ -14,12 +14,12 @@
                 href="{{ url_for('website.comedian', comedian_id=video.comedian_id) }}" style="text-decoration: none">{{
             video.comedian.name }}</a></h4>
         <div class="like-unlike" style="margin-left:auto;">
-            <a href="#" onclick="like_video('{{ video.id }}')"> <img class="like"
+            <a href="#" onclick="like_video('{{ video.id }}')" id="a_like_{{ video.id }}"> <img class="like"
                                                                         src="{{url_for('static', filename='like.png')}}"
-                                                                        id="like" ></a>
-            <a href="#" onclick="unlike_video('{{ video.id }}')"> <img class="unlike"
+                                                                        id="img_like_{{ video.id }}" ></a>
+            <a href="#" onclick="unlike_video('{{ video.id }}')" id="a_unlike_{{ video.id }}"> <img class="unlike"
                                                                           src="{{url_for('static', filename='unlike.png')}}"
-                                                                          id="unlike"></a>
+                                                                          id="img_unlike_{{ video.id }}"></a>
         </div>
     </div>
 

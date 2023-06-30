@@ -21,8 +21,11 @@
         url: `/api/videos/${video_id}/like`,
         type: 'POST',
         success: function(data) {
-          $('#like').text(data.likeCount);
-          $('#like').attr('src', '{{ url_for('static', filename='filled-like.png') }}');
+          let img = $(`#img_like_${video_id}`);
+          img.text(data.likeCount);
+          img.attr('src', '{{ url_for('static', filename='filled_like.png') }}');
+          $(`#a_like_${video_id}`).removeAttr("onclick");
+          $(`#a_unlike_${video_id}`).removeAttr("onclick");
         },
         error: function(error) {
           console.error(error);
@@ -35,8 +38,11 @@
         url: `/api/videos/${video_id}/unlike`,
         type: 'POST',
         success: function(data) {
-          $('#unlike').text(data.unlikeCount);
-          $('#unlike').attr('src', '{{ url_for('static', filename='filled-unlike.png') }}');
+          let img = $(`#img_unlike_${video_id}`);
+          img.text(data.unlikeCount);
+          img.attr('src', '{{ url_for('static', filename='filled_unlike.png') }}');
+          $(`#a_like_${video_id}`).removeAttr("onclick");
+          $(`#a_unlike_${video_id}`).removeAttr("onclick");
         },
         error: function(error) {
           console.error(error);
