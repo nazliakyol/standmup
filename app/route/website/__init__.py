@@ -5,4 +5,4 @@ bp = Blueprint('website', __name__, template_folder='templates')
 cache = Cache()
 pagesSize = 10
 
-from app.route.website import comedian, search, home, tag, video, tags, comedians
+from app.route.website import comedian, search, home, tag, video, tags, comedians, sitemap
