@@ -22,6 +22,7 @@
         type: 'POST',
         success: function(data) {
           $('#like').text(data.likeCount);
+          $('#like').attr('src', '{{ url_for('static', filename='filled-like.png') }}');
         },
         error: function(error) {
           console.error(error);
@@ -34,7 +35,8 @@
         url: `/api/videos/${video_id}/unlike`,
         type: 'POST',
         success: function(data) {
-          $('#like').text(data.likeCount);
+          $('#unlike').text(data.unlikeCount);
+          $('#unlike').attr('src', '{{ url_for('static', filename='filled-unlike.png') }}');
         },
         error: function(error) {
           console.error(error);
