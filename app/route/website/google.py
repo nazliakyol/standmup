@@ -1,28 +1,23 @@
 from flask import make_response, jsonify, render_template, request
-from flask_caching import CachedResponse
-from app.model.comedian_query import getComedianNames, getComedians
-from app.route.website import bp, cache
-from app.model.tag_query import getTagsWithCounts, getTags
+from app.model.comedian_query import  getComedians
+from app.route.website import bp
+from app.model.tag_query import getTags
 
-# video page
-@bp.route("/google", methods=["GET"])
+@bp.route("/api/google", methods=["GET"])
 def google():
 
-
     comedians = getComedians()
+    for comedian in comedians:
+        comedian_link = "https://standmup.com/comedians/" + str(comedian.id)
 
     all_tags = getTags()
-
-    #for tag in all_tags:
-    #    tag_print =
-#
-    #for comedian in comedians:
-    #    comedian_print = print("https://standmup.com/comedians/" + str(comedian.id) + "/" + tag.to_url())
+    for tag in all_tags:
+        tag_link= "https://standmup.com/comedians/" + str(tag.id) + "/" + tag.to_url()
 
 
-    return render_template(
-        "google.html",
-        comedians=comedians,
-        all_tags=all_tags,
-    )
+    result = {
+        "tag_link": tag_link,
+        "comedian_link": comedian_link,
+    }
 
+    return jsonify(result)
