@@ -21,19 +21,11 @@
         url: `/api/videos/${video_id}/like`,
         type: 'POST',
         success: function(data) {
-
           let img = $(`#img_like_${video_id}`);
           img.text(data.likeCount);
           img.attr('src', '{{ url_for('static', filename='filled_like.png') }}');
           $(`#a_like_${video_id}`).removeAttr("onclick");
           $(`#a_unlike_${video_id}`).removeAttr("onclick");
-
-          let small_img = $(`#img_small_like_${video_id}`);
-          small_img.text(data.likeCount);
-          small_img.attr('src', '{{ url_for('static', filename='filled_like.png') }}');
-          $(`#a_small_like_${video.id}`).removeAttr("onclick");
-          $(`#a_small_unlike_${video.id}`).removeAttr("onclick");
-
         },
         error: function(error) {
           console.error(error);
@@ -46,18 +38,11 @@
         url: `/api/videos/${video_id}/unlike`,
         type: 'POST',
         success: function(data) {
-
           let img = $(`#img_unlike_${video_id}`);
           img.text(data.unlikeCount);
           img.attr('src', '{{ url_for('static', filename='filled_unlike.png') }}');
           $(`#a_like_${video_id}`).removeAttr("onclick");
           $(`#a_unlike_${video_id}`).removeAttr("onclick");
-
-          let small_img = $(`#img_unlike_${video_id}`);
-          small_img.text(data.unlikeCount);
-          small_img.attr('src', '{{ url_for('static', filename='filled_unlike.png') }}');
-          $(`#a_small_like_${video.id}`).removeAttr("onclick");
-          $(`#a_small_unlike_${video.id}`).removeAttr("onclick");
         },
         error: function(error) {
           console.error(error);
@@ -166,19 +151,9 @@
         display:none
     }
 
-    .small-like-unlike {
-            display: none;
-        }
-
 
     @media only screen and (max-width: 700px) {
-       .like-unlike {
-            display: none;
-        }
 
-       .small-like-unlike {
-            display: inline;
-        }
         #logo{
             width: 20px;
             }
@@ -195,17 +170,6 @@
 
     </style>
 </head>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0X7EZB5VKM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-0X7EZB5VKM');
-
-</script>
 
 <body>
 <!-- Navigation -->
