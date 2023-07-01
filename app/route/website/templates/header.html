@@ -21,11 +21,19 @@
         url: `/api/videos/${video_id}/like`,
         type: 'POST',
         success: function(data) {
+
           let img = $(`#img_like_${video_id}`);
           img.text(data.likeCount);
           img.attr('src', '{{ url_for('static', filename='filled_like.png') }}');
           $(`#a_like_${video_id}`).removeAttr("onclick");
           $(`#a_unlike_${video_id}`).removeAttr("onclick");
+
+          let small_img = $(`#img_small_like_${video_id}`);
+          small_img.text(data.likeCount);
+          small_img.attr('src', '{{ url_for('static', filename='filled_like.png') }}');
+          $(`#a_small_like_${video.id}`).removeAttr("onclick");
+          $(`#a_small_unlike_${video.id}`).removeAttr("onclick");
+
         },
         error: function(error) {
           console.error(error);
@@ -38,11 +46,18 @@
         url: `/api/videos/${video_id}/unlike`,
         type: 'POST',
         success: function(data) {
+
           let img = $(`#img_unlike_${video_id}`);
           img.text(data.unlikeCount);
           img.attr('src', '{{ url_for('static', filename='filled_unlike.png') }}');
           $(`#a_like_${video_id}`).removeAttr("onclick");
           $(`#a_unlike_${video_id}`).removeAttr("onclick");
+
+          let small_img = $(`#img_unlike_${video_id}`);
+          small_img.text(data.unlikeCount);
+          small_img.attr('src', '{{ url_for('static', filename='filled_unlike.png') }}');
+          $(`#a_small_like_${video.id}`).removeAttr("onclick");
+          $(`#a_small_unlike_${video.id}`).removeAttr("onclick");
         },
         error: function(error) {
           console.error(error);
