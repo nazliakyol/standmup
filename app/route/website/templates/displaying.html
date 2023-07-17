@@ -9,11 +9,10 @@
     </div>
     <div style="display: flex; align-items: center;">
         <h4 class="video-title">
-            <a href="{{ url_for('website.video', video_id=video.id) }}" style="text-decoration: none">{{
+            <a href="/videos/{{ video.id}}/{{video.title|replace(' ', '-')}}" style="text-decoration: none">{{
                 video.title }}</a> by <a
                 href="/comedians/{{video.comedian_id}}/{{video.comedian.name|replace(' ', '-')}}"
-                style="text-decoration: none">{{
-            video.comedian.name }}</a></h4>
+                style="text-decoration: none">{{ video.comedian.name }}</a></h4>
         <div class="like-unlike" style="margin-left:auto; min-width:70px; margin-top:-15px;">
             <a href="javascript:;" onclick="like_video('{{ video.id }}')" id="a_like_{{ video.id }}"> <img class="like"
                                                                         src="{{url_for('static', filename='like.png')}}"

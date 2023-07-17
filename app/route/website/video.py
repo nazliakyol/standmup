@@ -7,9 +7,9 @@ from app.route.website import bp, cache
 from app.model.tag_query import getTagsWithCounts, getTags
 
 # video page
-@bp.route("/videos/<video_id>", methods=["GET"])
+@bp.route("/videos/<video_id>/<video_title>", methods=["GET"])
 @cache.cached(timeout=5000, query_string=True)
-def video(video_id):
+def video(video_id, video_title):
     args = request.args
 
     page = 1

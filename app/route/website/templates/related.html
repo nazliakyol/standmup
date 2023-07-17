@@ -24,7 +24,8 @@
         <div class="video-details" style="text-align: center;">
 
             <h4 class="video-title" style=" margin:10px 0; text-decoration: none;"><a
-                    href="{{ url_for('website.video', video_id=other_video.id) }}" style="text-decoration: none">{{
+                    href="/videos/{{other_video.id}}/{{other_video.title|replace(' ', '-')}}"
+                    style="text-decoration: none">{{
                 other_video.title }}</a> by
                 <a
                         href="/comedians/{{other_video.comedian_id}}/{{other_video.comedian.name|replace(' ', '-')}}"
