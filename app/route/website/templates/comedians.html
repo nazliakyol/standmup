@@ -6,9 +6,11 @@
             <h5 style="margin-bottom: 20px;">Comedians</h5>
             {% for comedian in all_comedians %}
             {% set name = comedian.name %}
-            <p  class="col-3" >
+            {% set id = comedian.id %}
+
+            <p class="col-3" >
                 <a style="text-decoration: none"
-                   href="/comedians/{{id}/ {{name}}">{{ name }}</a>
+                   href="comedians/{{id}}/{{name|replace(' ', '-')}}">{{ name }}</a>
             </p >
 
             {% endfor %}
