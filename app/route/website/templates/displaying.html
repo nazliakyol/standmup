@@ -11,7 +11,8 @@
         <h4 class="video-title">
             <a href="{{ url_for('website.video', video_id=video.id) }}" style="text-decoration: none">{{
                 video.title }}</a> by <a
-                href="{{ url_for('website.comedian', comedian_id=video.comedian_id) }}" style="text-decoration: none">{{
+                href="/comedians/{{video.comedian_id}}/{{video.comedian.name|replace(' ', '-')}}"
+                style="text-decoration: none">{{
             video.comedian.name }}</a></h4>
         <div class="like-unlike" style="margin-left:auto; min-width:70px; margin-top:-15px;">
             <a href="javascript:;" onclick="like_video('{{ video.id }}')" id="a_like_{{ video.id }}"> <img class="like"

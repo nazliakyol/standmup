@@ -27,10 +27,11 @@
                     href="{{ url_for('website.video', video_id=other_video.id) }}" style="text-decoration: none">{{
                 other_video.title }}</a> by
                 <a
-                        href="{{ url_for('website.comedian', comedian_id=other_video.comedian_id) }}"
+                        href="/comedians/{{other_video.comedian_id}}/{{other_video.comedian.name|replace(' ', '-')}}"
                         style="text-decoration: none">{{
                     other_video.comedian.name }}</a></h4>
-            <p class="video-description;" style="margin 0px;">{{ other_video.description }}</p>
+            <p class="video-description;" style="margin 0px;">{{ other_video.description
+                }}</p>
             <div class="tag-list" style="margin-right: 5px;">
                 {% for tag in other_video.getTags() %}
                 {% set name = tag.name|replace(' ', '-') %}

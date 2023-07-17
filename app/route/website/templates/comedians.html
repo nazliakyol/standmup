@@ -8,7 +8,7 @@
             {% set name = comedian.name %}
             <p  class="col-3" >
                 <a style="text-decoration: none"
-                   href="{{ url_for('website.comedian', comedian_id=comedian.id) }}">{{ name }}</a>
+                   href="/comedians/{{id}/ {{name}}">{{ name }}</a>
             </p >
 
             {% endfor %}

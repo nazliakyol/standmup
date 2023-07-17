@@ -9,9 +9,9 @@ from app.model.tag_query import getTags, getTagsWithCounts
 from app.route.website import bp, cache, pagesSize
 
 
-@bp.route("/comedians/<comedian_id>", methods=["GET"])
+@bp.route("/comedians/<comedian_id>/<comedian_name>", methods=["GET"])
 @cache.cached(timeout=5000, query_string=True)
-def comedian(comedian_id):
+def comedian(comedian_id, comedian_name):
     args = request.args
     page = 1
     if args.get("page") is not None:

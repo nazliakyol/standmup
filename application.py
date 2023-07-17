@@ -1,13 +1,8 @@
-import os
 from flask import Flask
 from app.model import db
 from app.route.api import bp as api_bp
 from app.route.website import bp as website_bp, cache
-
-
 from app.service.admin import start_admin
-
-basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__, template_folder="templates")
 

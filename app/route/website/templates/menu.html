@@ -16,10 +16,10 @@
                     {% if count > 2 %}
                     <li>
                             {% if title == name %}
-                            <a id="menu-comedian-{{id}}" href="{{ url_for('website.comedian', comedian_id=id) }}" class="selected">{{ name }}</a>
+                            <a id="menu-comedian-{{id}}" href="{{ url_for('website.comedian', comedian_id=id, comedian_name=name|replace(' ', '-')) }}" class="selected">{{ name }}</a>
                             <!-- {{ count }}-->
                             {% else %}
-                            <a id="menu-comedian-{{id}}" style="" href="{{ url_for('website.comedian', comedian_id=id) }}">{{ name }}</a>
+                            <a id="menu-comedian-{{id}}" style="" href="{{ url_for('website.comedian', comedian_id=id, comedian_name=name|replace(' ', '-')) }}">{{ name }}</a>
                             {% endif %}
                     </li>
 
